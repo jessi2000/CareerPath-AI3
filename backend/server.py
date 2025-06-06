@@ -198,7 +198,8 @@ class AIRoadmapService:
                     title=milestone_data["title"],
                     description=milestone_data["description"],
                     estimated_hours=milestone_data["estimated_hours"],
-                    resources=milestone_data["resources"],
+                    market_relevance=milestone_data.get("market_relevance"),
+                    resources=milestone_data.get("resources", []),
                     order=i + 1
                 )
                 milestones.append(milestone)
@@ -208,6 +209,9 @@ class AIRoadmapService:
                 user_id="",  # Will be set when saving
                 title=roadmap_data["title"],
                 description=roadmap_data["description"],
+                market_context=roadmap_data.get("market_context"),
+                current_market_salary=roadmap_data.get("current_market_salary"),
+                success_metrics=roadmap_data.get("success_metrics"),
                 milestones=milestones,
                 total_estimated_hours=roadmap_data["total_estimated_hours"]
             )
