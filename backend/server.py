@@ -237,13 +237,18 @@ async def update_milestone_progress(roadmap_id: str, progress: ProgressUpdate):
         # Get the roadmap
         roadmap = await db.roadmaps.find_one({"id": roadmap_id})
         if not roadmap:
-            raise HTTPException(status_code=404, detail="Roadmap not found")
+            raise HTTPException(status_code=404, detail=f"Roadmap with ID {roadmap_id} not found")
         
-        # Update milestone status
+        # Find the milestone to update
+        milestone_found = False
         for milestone in roadmap["milestones"]:
             if milestone["id"] == progress.milestone_id:
                 milestone["status"] = progress.status
+                milestone_found = True
                 break
+        
+        if not milestone_found:
+            raise HTTPException(status_code=404, detail=f"Milestone with ID {progress.milestone_id} not found")
         
         # Calculate progress percentage
         completed_milestones = sum(1 for m in roadmap["milestones"] if m["status"] == "completed")
@@ -257,15 +262,18 @@ async def update_milestone_progress(roadmap_id: str, progress: ProgressUpdate):
         )
         
         # Award points to user if milestone completed
-        if progress.status == "completed":
+        if progress.status == "completed" and roadmap.get("user_id"):
             await db.users.update_one(
                 {"id": roadmap["user_id"]},
                 {"$inc": {"total_points": 10}}
             )
         
         return {"success": True, "progress_percentage": progress_percentage}
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logging.error(f"Error updating milestone progress: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to update milestone progress: {str(e)}")
 
 @api_router.get("/leaderboard", response_model=List[LeaderboardEntry])
 async def get_leaderboard():
