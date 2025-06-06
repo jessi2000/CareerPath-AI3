@@ -1,38 +1,135 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 .App {
-    text-align: center;
+  text-align: left;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Smooth transitions */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom gradient backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hover effects for cards */
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Status indicators */
+.status-not-started {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.status-in-progress {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.status-completed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Progress bars */
+.progress-bar {
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #10b981, #34d399);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Responsive design helpers */
+@media (max-width: 768px) {
+  .mobile-stack {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  }
+  
+  .mobile-full {
+    width: 100%;
+  }
 }
 
-.App-link {
-    color: #61dafb;
+/* Custom focus styles */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Loading spinner */
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
