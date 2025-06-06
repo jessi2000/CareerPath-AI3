@@ -125,17 +125,27 @@ function App() {
       });
       
       if (response.ok) {
+        const result = await response.json();
+        
         // Update local roadmap state
         const updatedMilestones = roadmap.milestones.map(m => 
           m.id === milestoneId ? { ...m, status } : m
         );
-        setRoadmap({ ...roadmap, milestones: updatedMilestones });
+        setRoadmap({ ...roadmap, milestones: updatedMilestones, progress_percentage: result.progress_percentage });
+        
+        // Show success message for completion
+        if (status === 'completed') {
+          alert('🎉 Milestone completed! You earned 10 points!');
+        }
         
         // Refresh leaderboard
         fetchLeaderboard();
+      } else {
+        throw new Error('Failed to update milestone status');
       }
     } catch (error) {
       console.error('Error updating milestone:', error);
+      alert('Failed to update milestone status. Please try again.');
     }
   };
 
