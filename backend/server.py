@@ -57,6 +57,7 @@ class Milestone(BaseModel):
     title: str
     description: str
     estimated_hours: int
+    market_relevance: Optional[str] = None
     resources: List[Dict[str, str]] = []
     status: str = "not_started"  # not_started, in_progress, completed
     order: int
@@ -66,6 +67,9 @@ class CareerRoadmap(BaseModel):
     user_id: str
     title: str
     description: str
+    market_context: Optional[str] = None
+    current_market_salary: Optional[str] = None
+    success_metrics: Optional[str] = None
     milestones: List[Milestone]
     total_estimated_hours: int
     created_at: datetime = Field(default_factory=datetime.utcnow)
