@@ -39,8 +39,33 @@ function App() {
     setLoading(true);
     
     try {
+      // First create a user profile
+      const userName = assessmentData.target_role ? 
+        `Future ${assessmentData.target_role}` : 'Career Seeker';
+      
+      const userProfile = {
+        name: userName,
+        email: `user${Date.now()}@careerpath.ai`,
+        ...assessmentData
+      };
+      
+      const userResponse = await fetch(`${API_BASE}/api/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userProfile),
+      });
+      
+      if (!userResponse.ok) {
+        throw new Error('Failed to create user profile');
+      }
+      
+      const userData = await userResponse.json();
+      setUser(userData);
+      
       // Generate roadmap using AI
-      const response = await fetch(`${API_BASE}/api/generate-roadmap?user_name=User`, {
+      const roadmapResponse = await fetch(`${API_BASE}/api/generate-roadmap?user_name=${encodeURIComponent(userName)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,13 +73,34 @@ function App() {
         body: JSON.stringify(assessmentData),
       });
       
-      if (!response.ok) {
+      if (!roadmapResponse.ok) {
         throw new Error('Failed to generate roadmap');
       }
       
-      const generatedRoadmap = await response.json();
-      setRoadmap(generatedRoadmap);
+      const generatedRoadmap = await roadmapResponse.json();
+      
+      // Save the roadmap to the database with user ID
+      generatedRoadmap.user_id = userData.id;
+      
+      const saveResponse = await fetch(`${API_BASE}/api/roadmaps`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(generatedRoadmap),
+      });
+      
+      if (!saveResponse.ok) {
+        throw new Error('Failed to save roadmap');
+      }
+      
+      const savedRoadmap = await saveResponse.json();
+      setRoadmap(savedRoadmap);
       setCurrentStep('roadmap');
+      
+      // Refresh leaderboard to include new user
+      fetchLeaderboard();
+      
     } catch (error) {
       console.error('Error generating roadmap:', error);
       alert('Failed to generate roadmap. Please try again.');
