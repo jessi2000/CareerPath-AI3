@@ -187,9 +187,48 @@ class AIRoadmapService:
             user_message = UserMessage(text=prompt)
             response = await chat.send_message(user_message)
             
+            # Clean the response to extract JSON
+            response_text = response.strip()
+            
+            # Try to find JSON in the response
+            import re
+            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+            if json_match:
+                json_text = json_match.group(0)
+            else:
+                # If no JSON found, try to use the full response
+                json_text = response_text
+            
             # Parse the AI response
             import json
-            roadmap_data = json.loads(response.strip())
+            try:
+                roadmap_data = json.loads(json_text)
+            except json.JSONDecodeError as e:
+                logging.error(f"JSON decode error: {str(e)}")
+                logging.error(f"Response text: {response_text[:500]}...")
+                
+                # Fallback: create a basic roadmap structure
+                roadmap_data = {
+                    "title": f"Career Path: {assessment.current_role or 'Current Role'} to {assessment.target_role}",
+                    "description": f"A comprehensive roadmap to transition to {assessment.target_role} in {assessment.timeline_months} months",
+                    "market_context": f"Current market demand for {assessment.target_role} in {assessment.industry} industry",
+                    "milestones": [
+                        {
+                            "title": "Foundation Skills Development",
+                            "description": f"Build core skills needed for {assessment.target_role}",
+                            "estimated_hours": 40,
+                            "market_relevance": "Essential foundation for career transition",
+                            "resources": [
+                                {"title": "Industry-relevant course", "url": "https://coursera.org", "type": "course", "provider": "Coursera"},
+                                {"title": "Relevant handbook", "url": "https://amazon.com", "type": "book"}
+                            ],
+                            "order": 1
+                        }
+                    ],
+                    "total_estimated_hours": 40,
+                    "current_market_salary": f"Competitive salary for {assessment.target_role}",
+                    "success_metrics": "Measure progress through skill assessments and project completion"
+                }
             
             # Create milestones with proper IDs
             milestones = []
