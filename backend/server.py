@@ -90,24 +90,37 @@ class AIRoadmapService:
     
     async def generate_roadmap(self, assessment: AssessmentData, user_name: str) -> CareerRoadmap:
         try:
-            # Create chat instance
+            # Create chat instance with latest Claude model
             chat = LlmChat(
                 api_key=self.api_key,
                 session_id=f"roadmap_{uuid.uuid4()}",
-                system_message="""You are an expert career counselor and learning path designer. 
-                Generate detailed, actionable career roadmaps with specific milestones, resource recommendations, and realistic timelines.
+                system_message="""You are an expert career counselor and learning path designer with access to current web information. 
+                Generate detailed, actionable career roadmaps with REAL, CURRENT, VERIFIED resources and links.
+                
+                CRITICAL REQUIREMENTS FOR ENTERPRISE READINESS:
+                - ALL resource links must be real, working, and current as of 2025
+                - Search for and verify actual course URLs, certification programs, and book links
+                - Include current market salary data and skill demand information
+                - Provide up-to-date industry trends and hiring requirements
+                - Ensure all recommendations are actionable and immediately usable
                 
                 IMPORTANT: Respond ONLY with valid JSON in the exact format specified. Do not include any explanatory text before or after the JSON.
                 
                 For each milestone, provide:
                 1. Clear, actionable title
                 2. Detailed description of what to accomplish
-                3. Realistic time estimate in hours
-                4. 3-5 specific resources (courses, books, projects, certifications)
+                3. Realistic time estimate in hours (based on current 2025 standards)
+                4. 3-5 REAL, VERIFIED resources with working URLs:
+                   - Current online courses (Coursera, Udemy, edX, Pluralsight, LinkedIn Learning)
+                   - Recent books (with Amazon/publisher links)
+                   - Active certification programs
+                   - Real project ideas with implementation guides
                 5. Logical progression order
+                6. Current market context and relevance
                 
-                Consider the user's current level, target role, timeline, and available hours per week."""
-            ).with_model("anthropic", "claude-3-5-sonnet-20241022").with_max_tokens(4096)
+                Search the web for current information about the target role, required skills, and available learning resources.
+                Verify that all recommended resources are actively available and relevant in 2025."""
+            ).with_model("anthropic", "claude-sonnet-4-20250514").with_max_tokens(4096)
             
             # Generate prompt
             prompt = f"""
