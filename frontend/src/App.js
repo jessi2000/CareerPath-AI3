@@ -480,22 +480,43 @@ function App() {
               
               {milestone.resources && milestone.resources.length > 0 && (
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Recommended Resources:</h4>
-                  <div className="grid gap-2">
+                  <h4 className="font-medium text-gray-900 mb-3">Verified Current Resources (2025):</h4>
+                  <div className="grid gap-3">
                     {milestone.resources.map((resource, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-sm">
-                        <span className="text-blue-600">
-                          {resource.type === 'course' ? '📚' : resource.type === 'book' ? '📖' : '🛠️'}
-                        </span>
-                        {resource.url ? (
-                          <a href={resource.url} target="_blank" rel="noopener noreferrer" 
-                             className="text-blue-600 hover:underline">
-                            {resource.title}
-                          </a>
-                        ) : (
-                          <span className="text-gray-700">{resource.title}</span>
-                        )}
-                        <span className="text-gray-400">({resource.type})</span>
+                      <div key={idx} className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                        <div className="flex items-start gap-3">
+                          <span className="text-lg flex-shrink-0 mt-1">
+                            {resource.type === 'course' ? '📚' : 
+                             resource.type === 'book' ? '📖' : 
+                             resource.type === 'certification' ? '🏆' : '🛠️'}
+                          </span>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              {resource.url ? (
+                                <a href={resource.url} target="_blank" rel="noopener noreferrer" 
+                                   className="font-medium text-blue-600 hover:underline">
+                                  {resource.title}
+                                </a>
+                              ) : (
+                                <span className="font-medium text-gray-700">{resource.title}</span>
+                              )}
+                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                                {resource.type}
+                              </span>
+                            </div>
+                            <div className="text-sm text-gray-600 space-x-3">
+                              {resource.provider && <span>Provider: {resource.provider}</span>}
+                              {resource.cost && <span>Cost: {resource.cost}</span>}
+                              {resource.rating && <span>Rating: {resource.rating}</span>}
+                              {resource.duration && <span>Duration: {resource.duration}</span>}
+                              {resource.author && <span>Author: {resource.author}</span>}
+                              {resource.year && <span>Year: {resource.year}</span>}
+                            </div>
+                            {resource.description && (
+                              <p className="text-sm text-gray-600 mt-1">{resource.description}</p>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
