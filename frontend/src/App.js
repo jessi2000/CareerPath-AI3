@@ -345,6 +345,9 @@ function App() {
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-2">{roadmap?.title}</h2>
               <p className="text-gray-600">{roadmap?.description}</p>
+              {user && (
+                <p className="text-sm text-blue-600 mt-2">Welcome, {user.name}!</p>
+              )}
             </div>
             <button 
               onClick={resetApp}
@@ -352,6 +355,22 @@ function App() {
             >
               New Assessment
             </button>
+          </div>
+          
+          {/* Progress Bar */}
+          <div className="mb-6">
+            <div className="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Overall Progress</span>
+              <span>{Math.round((roadmap?.milestones?.filter(m => m.status === 'completed').length || 0) / (roadmap?.milestones?.length || 1) * 100)}%</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-3">
+              <div 
+                className="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-500"
+                style={{
+                  width: `${(roadmap?.milestones?.filter(m => m.status === 'completed').length || 0) / (roadmap?.milestones?.length || 1) * 100}%`
+                }}
+              ></div>
+            </div>
           </div>
           
           <div className="grid md:grid-cols-3 gap-4 mb-8">
