@@ -403,14 +403,29 @@ function App() {
 
         <div className="space-y-6">
           {roadmap?.milestones?.map((milestone, index) => (
-            <div key={milestone.id} className="bg-white rounded-xl shadow-lg p-6">
+            <div key={milestone.id} 
+                 className={`bg-white rounded-xl shadow-lg p-6 border-l-4 transition-all duration-300 ${
+                   milestone.status === 'completed' ? 'border-green-500 bg-green-50' :
+                   milestone.status === 'in_progress' ? 'border-yellow-500 bg-yellow-50' :
+                   'border-gray-300'
+                 }`}>
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+                    <span className={`text-sm font-medium px-3 py-1 rounded-full ${
+                      milestone.status === 'completed' ? 'bg-green-100 text-green-800' :
+                      milestone.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-blue-100 text-blue-800'
+                    }`}>
                       Step {milestone.order}
                     </span>
                     <h3 className="text-xl font-semibold text-gray-900">{milestone.title}</h3>
+                    {milestone.status === 'completed' && (
+                      <span className="text-green-600 text-xl">✅</span>
+                    )}
+                    {milestone.status === 'in_progress' && (
+                      <span className="text-yellow-600 text-xl">🔄</span>
+                    )}
                   </div>
                   <p className="text-gray-600 mb-3">{milestone.description}</p>
                   <div className="text-sm text-gray-500">
@@ -421,13 +436,16 @@ function App() {
                 <div className="flex gap-2 ml-4">
                   <button
                     onClick={() => updateMilestoneStatus(milestone.id, 'in_progress')}
+                    disabled={milestone.status === 'completed'}
                     className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                       milestone.status === 'in_progress' 
                         ? 'bg-yellow-100 text-yellow-800' 
+                        : milestone.status === 'completed'
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-gray-100 text-gray-600 hover:bg-yellow-100 hover:text-yellow-800'
                     }`}
                   >
-                    In Progress
+                    {milestone.status === 'in_progress' ? '🔄 In Progress' : 'Start'}
                   </button>
                   <button
                     onClick={() => updateMilestoneStatus(milestone.id, 'completed')}
@@ -437,7 +455,7 @@ function App() {
                         : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-800'
                     }`}
                   >
-                    ✓ Completed
+                    {milestone.status === 'completed' ? '✅ Completed' : 'Complete'}
                   </button>
                 </div>
               </div>
