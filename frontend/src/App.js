@@ -354,7 +354,19 @@ function App() {
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-2">{roadmap?.title}</h2>
-              <p className="text-gray-600">{roadmap?.description}</p>
+              <p className="text-gray-600 mb-3">{roadmap?.description}</p>
+              {roadmap?.market_context && (
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-3">
+                  <h4 className="font-semibold text-blue-800 mb-1">Current Market Context</h4>
+                  <p className="text-blue-700 text-sm">{roadmap.market_context}</p>
+                </div>
+              )}
+              {roadmap?.current_market_salary && (
+                <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-3">
+                  <h4 className="font-semibold text-green-800 mb-1">Expected Salary Range</h4>
+                  <p className="text-green-700 text-sm">{roadmap.current_market_salary}</p>
+                </div>
+              )}
               {user && (
                 <p className="text-sm text-blue-600 mt-2">Welcome, {user.name}!</p>
               )}
