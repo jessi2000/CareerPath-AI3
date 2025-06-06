@@ -440,6 +440,12 @@ function App() {
                     )}
                   </div>
                   <p className="text-gray-600 mb-3">{milestone.description}</p>
+                  {milestone.market_relevance && (
+                    <div className="bg-indigo-50 border-l-2 border-indigo-400 p-3 mb-3">
+                      <p className="text-indigo-700 text-sm font-medium">2025 Market Relevance:</p>
+                      <p className="text-indigo-600 text-sm">{milestone.market_relevance}</p>
+                    </div>
+                  )}
                   <div className="text-sm text-gray-500">
                     Estimated time: {milestone.estimated_hours} hours
                   </div>
