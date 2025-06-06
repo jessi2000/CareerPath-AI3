@@ -526,6 +526,15 @@ function App() {
           ))}
         </div>
 
+        {roadmap?.success_metrics && (
+          <div className="bg-white rounded-xl shadow-lg p-8 mt-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Success Metrics & Goals</h3>
+            <div className="bg-purple-50 border-l-4 border-purple-400 p-4">
+              <p className="text-purple-700">{roadmap.success_metrics}</p>
+            </div>
+          </div>
+        )}
+
         {leaderboard.length > 0 && (
           <div className="bg-white rounded-xl shadow-lg p-8 mt-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Leaderboard</h3>
