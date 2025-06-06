@@ -122,9 +122,12 @@ class AIRoadmapService:
                 Verify that all recommended resources are actively available and relevant in 2025."""
             ).with_model("anthropic", "claude-sonnet-4-20250514").with_max_tokens(4096)
             
-            # Generate prompt
+            # Generate enhanced prompt with current market context
+            current_year = datetime.now().year
             prompt = f"""
-            Create a career roadmap for {user_name} with the following details:
+            Create a comprehensive, enterprise-ready career roadmap for {user_name} with current market information and verified resources as of {current_year}.
+            
+            **Assessment Details:**
             - Current Education: {assessment.education_level}
             - Work Experience: {assessment.work_experience}
             - Current Role: {assessment.current_role or 'Not specified'}
@@ -134,28 +137,47 @@ class AIRoadmapService:
             - Timeline: {assessment.timeline_months} months
             - Available Hours/Week: {assessment.availability_hours_per_week}
             
-            Generate 8-12 milestones that will help them achieve their career goal.
-            Each milestone should be 10-40 hours of effort.
+            **CRITICAL INSTRUCTIONS:**
+            1. Search for and include REAL, WORKING links to current courses, certifications, and resources
+            2. Verify all resource URLs are active and accessible in {current_year}
+            3. Include current market salary expectations and skill demand for the target role
+            4. Provide up-to-date industry trends and hiring requirements
+            5. Ensure every resource is actionable and immediately usable
             
-            Respond with JSON in this exact format:
+            Generate 8-12 progressive milestones that reflect current {current_year} market demands.
+            Each milestone should be 15-50 hours of effort based on current industry standards.
+            
+            **REQUIRED JSON FORMAT:**
             {{
-                "title": "Career Path: [Current Role] to [Target Role]",
-                "description": "A comprehensive roadmap to transition from [current] to [target] in [timeline] months",
+                "title": "Career Path: [Current Role] to [Target Role] - {current_year}",
+                "description": "A comprehensive, current roadmap to transition from [current] to [target] in [timeline] months, aligned with {current_year} market demands",
+                "market_context": "Current market insights and salary expectations for [target role] in {current_year}",
                 "milestones": [
                     {{
                         "title": "Milestone Title",
-                        "description": "Detailed description of what to accomplish",
-                        "estimated_hours": 25,
+                        "description": "Detailed description with current {current_year} context",
+                        "estimated_hours": 35,
+                        "market_relevance": "Why this milestone is critical in {current_year}",
                         "resources": [
-                            {{"title": "Resource Name", "url": "https://example.com", "type": "course"}},
-                            {{"title": "Book Title", "url": "https://amazon.com/book", "type": "book"}},
-                            {{"title": "Project Idea", "url": "", "type": "project"}}
+                            {{"title": "Current Course Name", "url": "https://real-verified-url.com", "type": "course", "provider": "Coursera/Udemy/etc", "cost": "Free/Paid", "rating": "4.5/5"}},
+                            {{"title": "Recent Book Title", "url": "https://amazon.com/real-book-link", "type": "book", "author": "Author Name", "year": "2024/2025"}},
+                            {{"title": "Active Certification", "url": "https://real-cert-provider.com", "type": "certification", "provider": "Provider Name", "duration": "X weeks"}},
+                            {{"title": "Current Project Idea", "url": "https://tutorial-link.com", "type": "project", "description": "Specific implementation guide"}}
                         ],
                         "order": 1
                     }}
                 ],
-                "total_estimated_hours": 200
+                "total_estimated_hours": 300,
+                "current_market_salary": "Expected salary range for target role in {current_year}",
+                "success_metrics": "How to measure progress and success in {current_year} job market"
             }}
+            
+            **VERIFICATION REQUIREMENTS:**
+            - Every URL must be real and accessible
+            - All courses must be currently available for enrollment
+            - Certifications must be active programs
+            - Books should be recent (2022-2025) unless they are timeless classics
+            - Project ideas should reflect current technology and best practices
             """
             
             user_message = UserMessage(text=prompt)
