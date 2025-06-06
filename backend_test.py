@@ -4,6 +4,7 @@ import uuid
 import json
 import os
 import time
+import re
 from datetime import datetime
 
 # Get the backend URL from environment variable
@@ -33,7 +34,7 @@ class CareerPathAPITest(unittest.TestCase):
             "availability_hours_per_week": 10
         }
         
-        # Test assessment data for roadmap generation
+        # Test assessment data for roadmap generation - Software Engineer
         self.test_assessment = {
             "education_level": "bachelors",
             "work_experience": "mid_level",
@@ -44,6 +45,65 @@ class CareerPathAPITest(unittest.TestCase):
             "timeline_months": 12,
             "availability_hours_per_week": 10
         }
+        
+        # Test career transition scenarios
+        self.career_transitions = [
+            {
+                "name": "Marketing to Product Management",
+                "assessment": {
+                    "education_level": "bachelors",
+                    "work_experience": "mid_level",
+                    "current_role": "Marketing Associate",
+                    "target_role": "Product Manager",
+                    "industry": "technology",
+                    "skills": ["Marketing", "Communication", "Analytics"],
+                    "timeline_months": 12,
+                    "availability_hours_per_week": 15
+                }
+            },
+            {
+                "name": "Data Analyst to Data Scientist",
+                "assessment": {
+                    "education_level": "masters",
+                    "work_experience": "mid_level",
+                    "current_role": "Data Analyst",
+                    "target_role": "Data Scientist",
+                    "industry": "finance",
+                    "skills": ["SQL", "Excel", "Python", "Statistics"],
+                    "timeline_months": 9,
+                    "availability_hours_per_week": 12
+                }
+            },
+            {
+                "name": "Business Analyst to Strategy Consultant",
+                "assessment": {
+                    "education_level": "bachelors",
+                    "work_experience": "senior_level",
+                    "current_role": "Business Analyst",
+                    "target_role": "Strategy Consultant",
+                    "industry": "consulting",
+                    "skills": ["Business Analysis", "Project Management", "Excel"],
+                    "timeline_months": 12,
+                    "availability_hours_per_week": 10
+                }
+            }
+        ]
+        
+    def is_valid_url(self, url):
+        """Check if a URL is valid and points to a real domain"""
+        url_pattern = re.compile(
+            r'^(?:http|https)://'  # http:// or https://
+            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain
+            r'localhost|'  # localhost
+            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # or IP
+            r'(?::\d+)?'  # optional port
+            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        
+        return bool(url_pattern.match(url)) and any(domain in url.lower() for domain in [
+            'coursera.org', 'udemy.com', 'edx.org', 'pluralsight.com', 'linkedin.com',
+            'amazon.com', 'github.com', 'microsoft.com', 'google.com', 'aws.amazon.com',
+            'ibm.com', 'oracle.com', 'salesforce.com', 'datacamp.com', 'kaggle.com'
+        ])
     
     def test_01_api_root(self):
         """Test the API root endpoint"""
