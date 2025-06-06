@@ -129,59 +129,39 @@ class AIRoadmapService:
             # Generate enhanced prompt with current market context
             current_year = datetime.now().year
             prompt = f"""
-            Create a comprehensive, enterprise-ready career roadmap for {user_name} with current market information and verified resources as of {current_year}.
+            Create a career roadmap for transitioning from {assessment.current_role or 'current role'} to {assessment.target_role} in the {assessment.industry} industry.
             
-            **Assessment Details:**
-            - Current Education: {assessment.education_level}
-            - Work Experience: {assessment.work_experience}
-            - Current Role: {assessment.current_role or 'Not specified'}
-            - Target Role: {assessment.target_role}
-            - Industry: {assessment.industry}
-            - Current Skills: {', '.join(assessment.skills)}
+            User Details:
+            - Education: {assessment.education_level}
+            - Experience: {assessment.work_experience}
+            - Skills: {', '.join(assessment.skills)}
             - Timeline: {assessment.timeline_months} months
-            - Available Hours/Week: {assessment.availability_hours_per_week}
+            - Hours/Week: {assessment.availability_hours_per_week}
             
-            **CRITICAL INSTRUCTIONS:**
-            1. Search for and include REAL, WORKING links to current courses, certifications, and resources
-            2. Verify all resource URLs are active and accessible in {current_year}
-            3. Include current market salary expectations and skill demand for the target role
-            4. Provide up-to-date industry trends and hiring requirements
-            5. Ensure every resource is actionable and immediately usable
-            
-            Generate 8-12 progressive milestones that reflect current {current_year} market demands.
-            Each milestone should be 15-50 hours of effort based on current industry standards.
-            
-            **REQUIRED JSON FORMAT:**
+            Return ONLY valid JSON with this structure (no other text):
             {{
-                "title": "Career Path: [Current Role] to [Target Role] - {current_year}",
-                "description": "A comprehensive, current roadmap to transition from [current] to [target] in [timeline] months, aligned with {current_year} market demands",
-                "market_context": "Current market insights and salary expectations for [target role] in {current_year}",
+                "title": "Career Path: Current Role to Target Role - 2025",
+                "description": "Roadmap description",
+                "market_context": "Current market insights for the target role",
                 "milestones": [
                     {{
-                        "title": "Milestone Title",
-                        "description": "Detailed description with current {current_year} context",
-                        "estimated_hours": 35,
-                        "market_relevance": "Why this milestone is critical in {current_year}",
+                        "title": "Milestone 1",
+                        "description": "What to accomplish",
+                        "estimated_hours": 30,
+                        "market_relevance": "Why important in 2025",
                         "resources": [
-                            {{"title": "Current Course Name", "url": "https://real-verified-url.com", "type": "course", "provider": "Coursera/Udemy/etc", "cost": "Free/Paid", "rating": "4.5/5"}},
-                            {{"title": "Recent Book Title", "url": "https://amazon.com/real-book-link", "type": "book", "author": "Author Name", "year": "2024/2025"}},
-                            {{"title": "Active Certification", "url": "https://real-cert-provider.com", "type": "certification", "provider": "Provider Name", "duration": "X weeks"}},
-                            {{"title": "Current Project Idea", "url": "https://tutorial-link.com", "type": "project", "description": "Specific implementation guide"}}
+                            {{"title": "Course Name", "url": "https://coursera.org/course", "type": "course", "provider": "Coursera"}},
+                            {{"title": "Book Name", "url": "https://amazon.com/book", "type": "book", "author": "Author"}}
                         ],
                         "order": 1
                     }}
                 ],
-                "total_estimated_hours": 300,
-                "current_market_salary": "Expected salary range for target role in {current_year}",
-                "success_metrics": "How to measure progress and success in {current_year} job market"
+                "total_estimated_hours": 240,
+                "current_market_salary": "Salary expectations",
+                "success_metrics": "How to measure success"
             }}
             
-            **VERIFICATION REQUIREMENTS:**
-            - Every URL must be real and accessible
-            - All courses must be currently available for enrollment
-            - Certifications must be active programs
-            - Books should be recent (2022-2025) unless they are timeless classics
-            - Project ideas should reflect current technology and best practices
+            Generate 6-10 milestones with real, current resources and links.
             """
             
             user_message = UserMessage(text=prompt)
