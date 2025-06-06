@@ -8,7 +8,7 @@ import re
 from datetime import datetime
 
 # Get the backend URL from environment variable
-BACKEND_URL = "https://6debd6bc-9286-42af-8cec-68acce64c21e.preview.emergentagent.com"
+BACKEND_URL = "https://433a5662-d2d9-485e-80aa-30c8113ce3fa.preview.emergentagent.com"
 
 class CareerPathAPITest(unittest.TestCase):
     """Test suite for CareerPath AI API endpoints"""
