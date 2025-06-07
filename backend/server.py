@@ -308,7 +308,7 @@ async def update_milestone_progress(
     roadmap_id: str, 
     progress: ProgressUpdate, 
     background_tasks: BackgroundTasks,
-    current_user: dict = Depends(get_current_user)
+    current_user: dict = None
 ):
     try:
         # Get the roadmap
