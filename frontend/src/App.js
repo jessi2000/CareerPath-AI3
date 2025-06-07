@@ -289,6 +289,7 @@ function App() {
     </div>
   );
 
+  const resetApp = () => {
     setCurrentStep('welcome');
     setUser(null);
     setAssessmentData({
@@ -302,6 +303,7 @@ function App() {
       availability_hours_per_week: 10
     });
     setRoadmap(null);
+  };
   };
 
   const WelcomeScreen = () => (
