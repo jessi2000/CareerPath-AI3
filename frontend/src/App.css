@@ -34,6 +34,11 @@ input, textarea, select, button {
   transition: none;
 }
 
+/* Custom gradient backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
 /* Custom dark theme colors */
 .bg-gray-750 {
   background-color: #374151;
