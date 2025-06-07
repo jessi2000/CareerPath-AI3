@@ -4,8 +4,8 @@ import uuid
 from datetime import datetime
 import asyncio
 
-from database import db
-from auth import verify_token
+from backend.database import db
+from backend.auth import verify_token
 
 # Create Socket.IO server
 sio = socketio.AsyncServer(
