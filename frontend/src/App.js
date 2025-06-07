@@ -362,32 +362,32 @@ function App() {
   );
 
   const RoadmapScreen = () => (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg p-8 mb-8 border border-gray-700">
           <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">{roadmap?.title}</h2>
-              <p className="text-gray-600 mb-3">{roadmap?.description}</p>
+              <h2 className="text-3xl font-bold text-white mb-2">{roadmap?.title}</h2>
+              <p className="text-gray-300 mb-3">{roadmap?.description}</p>
               {roadmap?.market_context && (
-                <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-3">
-                  <h4 className="font-semibold text-blue-800 mb-1">Current Market Context</h4>
-                  <p className="text-blue-700 text-sm">{roadmap.market_context}</p>
+                <div className="bg-blue-900/50 border-l-4 border-blue-400 p-4 mb-3 rounded-r-lg">
+                  <h4 className="font-semibold text-blue-300 mb-1">Current Market Context</h4>
+                  <p className="text-blue-200 text-sm">{roadmap.market_context}</p>
                 </div>
               )}
               {roadmap?.current_market_salary && (
-                <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-3">
-                  <h4 className="font-semibold text-green-800 mb-1">Expected Salary Range</h4>
-                  <p className="text-green-700 text-sm">{roadmap.current_market_salary}</p>
+                <div className="bg-green-900/50 border-l-4 border-green-400 p-4 mb-3 rounded-r-lg">
+                  <h4 className="font-semibold text-green-300 mb-1">Expected Salary Range</h4>
+                  <p className="text-green-200 text-sm">{roadmap.current_market_salary}</p>
                 </div>
               )}
               {user && (
-                <p className="text-sm text-blue-600 mt-2">Welcome, {user.name}!</p>
+                <p className="text-sm text-cyan-400 mt-2">Welcome, {user.name}!</p>
               )}
             </div>
             <button 
               onClick={resetApp}
-              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+              className="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors border border-gray-600"
             >
               New Assessment
             </button>
@@ -395,11 +395,11 @@ function App() {
           
           {/* Progress Bar */}
           <div className="mb-6">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
+            <div className="flex justify-between text-sm text-gray-300 mb-2">
               <span>Overall Progress</span>
               <span>{Math.round((roadmap?.milestones?.filter(m => m.status === 'completed').length || 0) / (roadmap?.milestones?.length || 1) * 100)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            <div className="w-full bg-gray-700 rounded-full h-3">
               <div 
                 className="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-500"
                 style={{
@@ -410,19 +410,19 @@ function App() {
           </div>
           
           <div className="grid md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600">{roadmap?.milestones?.length}</div>
-              <div className="text-sm text-gray-600">Milestones</div>
+            <div className="bg-blue-900/50 p-4 rounded-lg border border-blue-700">
+              <div className="text-2xl font-bold text-blue-400">{roadmap?.milestones?.length}</div>
+              <div className="text-sm text-gray-300">Milestones</div>
             </div>
-            <div className="bg-green-50 p-4 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">{roadmap?.total_estimated_hours}h</div>
-              <div className="text-sm text-gray-600">Total Hours</div>
+            <div className="bg-green-900/50 p-4 rounded-lg border border-green-700">
+              <div className="text-2xl font-bold text-green-400">{roadmap?.total_estimated_hours}h</div>
+              <div className="text-sm text-gray-300">Total Hours</div>
             </div>
-            <div className="bg-purple-50 p-4 rounded-lg">
-              <div className="text-2xl font-bold text-purple-600">
+            <div className="bg-purple-900/50 p-4 rounded-lg border border-purple-700">
+              <div className="text-2xl font-bold text-purple-400">
                 {roadmap?.milestones?.filter(m => m.status === 'completed').length || 0}
               </div>
-              <div className="text-sm text-gray-600">Completed</div>
+              <div className="text-sm text-gray-300">Completed</div>
             </div>
           </div>
         </div>
