@@ -1,0 +1,79 @@
+🚀 Starting CareerPath AI API Tests
+test_01_api_root (__main__.CareerPathAPITest.test_01_api_root)
+Test the API root endpoint ... 
+🔍 Testing API root endpoint...
+✅ API root endpoint test passed
+ok
+test_02_create_user (__main__.CareerPathAPITest.test_02_create_user)
+Test creating a new user ... 
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 6dacfd43-5329-4e74-a531-d771c86a11f5
+ok
+test_03_get_user (__main__.CareerPathAPITest.test_03_get_user)
+Test retrieving a user by ID ... 
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 21172cd1-f5d2-4b27-8c2e-438ee94b1a5f
+
+🔍 Testing get user with ID: 21172cd1-f5d2-4b27-8c2e-438ee94b1a5f...
+✅ Get user test passed
+ok
+test_04_generate_roadmap (__main__.CareerPathAPITest.test_04_generate_roadmap)
+Test generating a roadmap with AI ... 
+🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 8 milestones
+
+🔍 Validating resource quality...
+Total resources: 32
+Resources with valid URLs: 22
+Resources with provider info: 23
+Resources with additional details: 9
+Valid URL percentage: 68.8%
+Provider information percentage: 71.9%
+Additional details percentage: 28.1%
+ok
+test_05_save_roadmap (__main__.CareerPathAPITest.test_05_save_roadmap)
+Test saving a roadmap ... 
+🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 8 milestones
+
+🔍 Validating resource quality...
+Total resources: 40
+Resources with valid URLs: 31
+Resources with provider info: 25
+Resources with additional details: 15
+Valid URL percentage: 77.5%
+Provider information percentage: 62.5%
+Additional details percentage: 37.5%
+
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 8bcdf6da-c486-4453-abcc-f69060be8dd3
+
+🔍 Testing roadmap saving...
+✅ Roadmap saving test passed. Roadmap ID: 27f5ceb8-fe87-401f-b2b1-9430366188d5
+ok
+test_06_get_user_roadmaps (__main__.CareerPathAPITest.test_06_get_user_roadmaps)
+Test retrieving roadmaps for a user ... 
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 6e962a3d-6747-4a2e-800a-43c2b82294e3
+
+🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 8 milestones
+
+🔍 Validating resource quality...
+Total resources: 32
+Resources with valid URLs: 22
+Resources with provider info: 24
+Resources with additional details: 8
+Valid URL percentage: 68.8%
+Provider information percentage: 75.0%
+Additional details percentage: 25.0%
+
+🔍 Testing roadmap saving...
+✅ Roadmap saving test passed. Roadmap ID: 43c81d7f-a9d3-4c21-a1e8-94794bab856c
+
+🔍 Testing get roadmaps for user ID: 6e962a3d-6747-4a2e-800a-43c2b82294e3...
+✅ Get user roadmaps test passed. Found 1 roadmaps
+ok
+test_07_update_milestone_progress (__main__.CareerPathAPITest.test_07_update_milestone_progress)
+Test updating milestone progress ... 
+🔍 Testing roadmap generation...
