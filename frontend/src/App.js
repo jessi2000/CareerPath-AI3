@@ -541,27 +541,27 @@ function App() {
         </div>
 
         {roadmap?.success_metrics && (
-          <div className="bg-white rounded-xl shadow-lg p-8 mt-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Success Metrics & Goals</h3>
-            <div className="bg-purple-50 border-l-4 border-purple-400 p-4">
-              <p className="text-purple-700">{roadmap.success_metrics}</p>
+          <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg p-8 mt-8 border border-gray-700">
+            <h3 className="text-2xl font-bold text-white mb-4">Success Metrics & Goals</h3>
+            <div className="bg-purple-900/50 border-l-4 border-purple-400 p-4 rounded-r-lg">
+              <p className="text-purple-200">{roadmap.success_metrics}</p>
             </div>
           </div>
         )}
 
         {leaderboard.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-8 mt-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Leaderboard</h3>
+          <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg p-8 mt-8 border border-gray-700">
+            <h3 className="text-2xl font-bold text-white mb-6">Leaderboard</h3>
             <div className="space-y-3">
               {leaderboard.slice(0, 5).map((entry, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-750/50 rounded-lg border border-gray-600">
                   <div className="flex items-center gap-3">
-                    <span className="bg-blue-100 text-blue-800 w-8 h-8 rounded-full flex items-center justify-center font-semibold">
+                    <span className="bg-blue-900/50 text-blue-300 w-8 h-8 rounded-full flex items-center justify-center font-semibold border border-blue-700">
                       {entry.rank}
                     </span>
-                    <span className="font-medium">{entry.user_name}</span>
+                    <span className="font-medium text-white">{entry.user_name}</span>
                   </div>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm text-gray-400">
                     {entry.total_points} points • {entry.milestones_completed} milestones
                   </div>
                 </div>
