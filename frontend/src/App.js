@@ -430,37 +430,37 @@ function App() {
         <div className="space-y-6">
           {roadmap?.milestones?.map((milestone, index) => (
             <div key={milestone.id} 
-                 className={`bg-white rounded-xl shadow-lg p-6 border-l-4 transition-all duration-300 ${
-                   milestone.status === 'completed' ? 'border-green-500 bg-green-50' :
-                   milestone.status === 'in_progress' ? 'border-yellow-500 bg-yellow-50' :
-                   'border-gray-300'
+                 className={`bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 transition-all duration-300 border border-gray-700 ${
+                   milestone.status === 'completed' ? 'border-l-green-500 bg-green-900/20' :
+                   milestone.status === 'in_progress' ? 'border-l-yellow-500 bg-yellow-900/20' :
+                   'border-l-gray-500'
                  }`}>
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                      milestone.status === 'completed' ? 'bg-green-100 text-green-800' :
-                      milestone.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-blue-100 text-blue-800'
+                      milestone.status === 'completed' ? 'bg-green-900/50 text-green-300 border border-green-700' :
+                      milestone.status === 'in_progress' ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-700' :
+                      'bg-blue-900/50 text-blue-300 border border-blue-700'
                     }`}>
                       Step {milestone.order}
                     </span>
-                    <h3 className="text-xl font-semibold text-gray-900">{milestone.title}</h3>
+                    <h3 className="text-xl font-semibold text-white">{milestone.title}</h3>
                     {milestone.status === 'completed' && (
-                      <span className="text-green-600 text-xl">✅</span>
+                      <span className="text-green-400 text-xl">✅</span>
                     )}
                     {milestone.status === 'in_progress' && (
-                      <span className="text-yellow-600 text-xl">🔄</span>
+                      <span className="text-yellow-400 text-xl">🔄</span>
                     )}
                   </div>
-                  <p className="text-gray-600 mb-3">{milestone.description}</p>
+                  <p className="text-gray-300 mb-3">{milestone.description}</p>
                   {milestone.market_relevance && (
-                    <div className="bg-indigo-50 border-l-2 border-indigo-400 p-3 mb-3">
-                      <p className="text-indigo-700 text-sm font-medium">2025 Market Relevance:</p>
-                      <p className="text-indigo-600 text-sm">{milestone.market_relevance}</p>
+                    <div className="bg-indigo-900/50 border-l-2 border-indigo-400 p-3 mb-3 rounded-r-lg">
+                      <p className="text-indigo-300 text-sm font-medium">2025 Market Relevance:</p>
+                      <p className="text-indigo-200 text-sm">{milestone.market_relevance}</p>
                     </div>
                   )}
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-400">
                     Estimated time: {milestone.estimated_hours} hours
                   </div>
                 </div>
@@ -471,10 +471,10 @@ function App() {
                     disabled={milestone.status === 'completed'}
                     className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                       milestone.status === 'in_progress' 
-                        ? 'bg-yellow-100 text-yellow-800' 
+                        ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-700' 
                         : milestone.status === 'completed'
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'bg-gray-100 text-gray-600 hover:bg-yellow-100 hover:text-yellow-800'
+                        ? 'bg-gray-700 text-gray-500 cursor-not-allowed border border-gray-600'
+                        : 'bg-gray-700 text-gray-300 hover:bg-yellow-900/50 hover:text-yellow-300 border border-gray-600 hover:border-yellow-700'
                     }`}
                   >
                     {milestone.status === 'in_progress' ? '🔄 In Progress' : 'Start'}
@@ -483,8 +483,8 @@ function App() {
                     onClick={() => updateMilestoneStatus(milestone.id, 'completed')}
                     className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                       milestone.status === 'completed' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-800'
+                        ? 'bg-green-900/50 text-green-300 border border-green-700' 
+                        : 'bg-gray-700 text-gray-300 hover:bg-green-900/50 hover:text-green-300 border border-gray-600 hover:border-green-700'
                     }`}
                   >
                     {milestone.status === 'completed' ? '✅ Completed' : 'Complete'}
@@ -494,10 +494,10 @@ function App() {
               
               {milestone.resources && milestone.resources.length > 0 && (
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-3">Verified Current Resources (2025):</h4>
+                  <h4 className="font-medium text-white mb-3">Verified Current Resources (2025):</h4>
                   <div className="grid gap-3">
                     {milestone.resources.map((resource, idx) => (
-                      <div key={idx} className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                      <div key={idx} className="bg-gray-750/50 p-3 rounded-lg border border-gray-600">
                         <div className="flex items-start gap-3">
                           <span className="text-lg flex-shrink-0 mt-1">
                             {resource.type === 'course' ? '📚' : 
@@ -508,17 +508,17 @@ function App() {
                             <div className="flex items-center gap-2 mb-1">
                               {resource.url ? (
                                 <a href={resource.url} target="_blank" rel="noopener noreferrer" 
-                                   className="font-medium text-blue-600 hover:underline">
+                                   className="font-medium text-cyan-400 hover:text-cyan-300 hover:underline">
                                   {resource.title}
                                 </a>
                               ) : (
-                                <span className="font-medium text-gray-700">{resource.title}</span>
+                                <span className="font-medium text-white">{resource.title}</span>
                               )}
-                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                              <span className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded-full border border-blue-700">
                                 {resource.type}
                               </span>
                             </div>
-                            <div className="text-sm text-gray-600 space-x-3">
+                            <div className="text-sm text-gray-400 space-x-3">
                               {resource.provider && <span>Provider: {resource.provider}</span>}
                               {resource.cost && <span>Cost: {resource.cost}</span>}
                               {resource.rating && <span>Rating: {resource.rating}</span>}
@@ -527,7 +527,7 @@ function App() {
                               {resource.year && <span>Year: {resource.year}</span>}
                             </div>
                             {resource.description && (
-                              <p className="text-sm text-gray-600 mt-1">{resource.description}</p>
+                              <p className="text-sm text-gray-300 mt-1">{resource.description}</p>
                             )}
                           </div>
                         </div>
