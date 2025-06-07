@@ -19,6 +19,8 @@ function App() {
   const [roadmap, setRoadmap] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingStage, setLoadingStage] = useState('');
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     fetchLeaderboard();
