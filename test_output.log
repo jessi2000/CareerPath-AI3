@@ -77,3 +77,45 @@ ok
 test_07_update_milestone_progress (__main__.CareerPathAPITest.test_07_update_milestone_progress)
 Test updating milestone progress ... 
 🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 9 milestones
+
+🔍 Validating resource quality...
+Total resources: 36
+Resources with valid URLs: 25
+Resources with provider info: 26
+Resources with additional details: 10
+Valid URL percentage: 69.4%
+Provider information percentage: 72.2%
+Additional details percentage: 27.8%
+
+🔍 Testing user creation...
+✅ User creation test passed. User ID: ebe6ede1-2537-4e54-8f38-35d46ed30fdf
+
+🔍 Testing roadmap saving...
+✅ Roadmap saving test passed. Roadmap ID: 321b3d43-1578-4857-88b8-41197ee4e851
+
+🔍 Testing milestone progress update...
+⚠️ Warning: Progress update failed with status 403
+Response: {"detail":"Not authenticated"}
+ok
+test_08_get_leaderboard (__main__.CareerPathAPITest.test_08_get_leaderboard)
+Test retrieving the leaderboard ... 
+🔍 Testing leaderboard retrieval...
+✅ Leaderboard test passed. Found 10 entries
+ok
+test_09_error_handling (__main__.CareerPathAPITest.test_09_error_handling)
+Test error handling for invalid requests ... 
+🔍 Testing error handling...
+✅ Error handling test passed
+ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 241.430s
+
+OK
+
+📊 Test Summary:
+Tests Run: 9
+Errors: 0
+Failures: 0
+✅ All tests passed!
