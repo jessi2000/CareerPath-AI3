@@ -242,52 +242,6 @@ function App() {
       </div>
     </div>
   );
-  const LoadingOverlay = () => (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 max-w-md w-full mx-4 border border-white/20">
-        <div className="text-center">
-          {/* Animated Logo */}
-          <div className="mb-6">
-            <div className="relative">
-              <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 flex items-center justify-center animate-pulse">
-                <span className="text-2xl font-bold text-white">AI</span>
-              </div>
-              <div className="absolute inset-0 w-16 h-16 mx-auto rounded-full border-4 border-transparent border-t-cyan-400 animate-spin"></div>
-            </div>
-          </div>
-          
-          {/* Progress Bar */}
-          <div className="mb-6">
-            <div className="w-full bg-gray-700 rounded-full h-3 mb-3">
-              <div 
-                className="bg-gradient-to-r from-cyan-400 to-blue-600 h-3 rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${loadingProgress}%` }}
-              ></div>
-            </div>
-            <div className="text-sm text-gray-300">{Math.round(loadingProgress)}% Complete</div>
-          </div>
-          
-          {/* Loading Message */}
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold text-white mb-2">Creating Your Career Roadmap</h3>
-            <p className="text-cyan-400 animate-pulse">{loadingStage}</p>
-          </div>
-          
-          {/* Animated Dots */}
-          <div className="flex justify-center space-x-2">
-            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-          </div>
-          
-          {/* Professional Touch */}
-          <div className="mt-6 text-xs text-gray-400">
-            Powered by Advanced AI • Enterprise Grade
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 
   const resetApp = () => {
     setCurrentStep('welcome');
