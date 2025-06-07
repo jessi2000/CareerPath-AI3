@@ -137,6 +137,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "User creation and retrieval tests passed. Successfully created a user and retrieved user details."
+      - working: true
+        agent: "testing"
+        comment: "Health check confirmed user creation and retrieval endpoints are working correctly. Successfully created a new user and retrieved the user details."
 
   - task: "Career Roadmap Generation with Claude AI"
     implemented: true
