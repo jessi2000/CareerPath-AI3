@@ -1,0 +1,129 @@
+🚀 Starting CareerPath AI API Tests
+test_01_api_root (__main__.CareerPathAPITest.test_01_api_root)
+Test the API root endpoint ... 
+🔍 Testing API root endpoint...
+✅ API root endpoint test passed
+ok
+test_02_create_user (__main__.CareerPathAPITest.test_02_create_user)
+Test creating a new user ... 
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 820baba1-42b3-4dd4-bf04-6d76e1f4233f
+ok
+test_03_get_user (__main__.CareerPathAPITest.test_03_get_user)
+Test retrieving a user by ID ... 
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 5d4c810e-d8c0-4cad-806f-778fbfb77766
+
+🔍 Testing get user with ID: 5d4c810e-d8c0-4cad-806f-778fbfb77766...
+✅ Get user test passed
+ok
+test_04_generate_roadmap (__main__.CareerPathAPITest.test_04_generate_roadmap)
+Test generating a roadmap with AI ... 
+🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 9 milestones
+
+🔍 Validating resource quality...
+Total resources: 36
+Resources with valid URLs: 27
+Resources with provider info: 26
+Resources with additional details: 10
+Valid URL percentage: 75.0%
+Provider information percentage: 72.2%
+Additional details percentage: 27.8%
+ok
+test_05_save_roadmap (__main__.CareerPathAPITest.test_05_save_roadmap)
+Test saving a roadmap ... 
+🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 8 milestones
+
+🔍 Validating resource quality...
+Total resources: 32
+Resources with valid URLs: 23
+Resources with provider info: 20
+Resources with additional details: 12
+Valid URL percentage: 71.9%
+Provider information percentage: 62.5%
+Additional details percentage: 37.5%
+
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 29cc658e-98a6-44f1-b4a6-9c472ec52c3a
+
+🔍 Testing roadmap saving...
+✅ Roadmap saving test passed. Roadmap ID: 219b929a-a448-45ce-ac78-7ed90dc3c2f0
+ok
+test_06_get_user_roadmaps (__main__.CareerPathAPITest.test_06_get_user_roadmaps)
+Test retrieving roadmaps for a user ... 
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 2aac9a09-8fcb-4264-88c8-cb4693a36a0d
+
+🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 8 milestones
+
+🔍 Validating resource quality...
+Total resources: 32
+Resources with valid URLs: 20
+Resources with provider info: 21
+Resources with additional details: 11
+Valid URL percentage: 62.5%
+Provider information percentage: 65.6%
+Additional details percentage: 34.4%
+
+🔍 Testing roadmap saving...
+✅ Roadmap saving test passed. Roadmap ID: a012ad37-6dbd-4b55-bd82-b84366b7d46b
+
+🔍 Testing get roadmaps for user ID: 2aac9a09-8fcb-4264-88c8-cb4693a36a0d...
+✅ Get user roadmaps test passed. Found 1 roadmaps
+ok
+test_07_update_milestone_progress (__main__.CareerPathAPITest.test_07_update_milestone_progress)
+Test updating milestone progress ... 
+🔍 Testing roadmap generation...
+✅ Roadmap generation test passed. Generated 9 milestones
+
+🔍 Validating resource quality...
+Total resources: 36
+Resources with valid URLs: 22
+Resources with provider info: 26
+Resources with additional details: 10
+Valid URL percentage: 61.1%
+Provider information percentage: 72.2%
+Additional details percentage: 27.8%
+
+🔍 Testing user creation...
+✅ User creation test passed. User ID: 94fcb80e-6894-47b4-b121-99fbdcdf3c6d
+
+🔍 Testing roadmap saving...
+✅ Roadmap saving test passed. Roadmap ID: 63cb662f-bb22-44e7-9cdf-09844e7ca63c
+
+🔍 Testing milestone progress update...
+⚠️ Warning: Progress update failed with status 403
+Response: {"detail":"Not authenticated"}
+ok
+test_08_get_leaderboard (__main__.CareerPathAPITest.test_08_get_leaderboard)
+Test retrieving the leaderboard ... 
+🔍 Testing leaderboard retrieval...
+FAIL
+test_09_error_handling (__main__.CareerPathAPITest.test_09_error_handling)
+Test error handling for invalid requests ... 
+🔍 Testing error handling...
+✅ Error handling test passed
+ok
+
+======================================================================
+FAIL: test_08_get_leaderboard (__main__.CareerPathAPITest.test_08_get_leaderboard)
+Test retrieving the leaderboard
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/app/backend_test.py", line 442, in test_08_get_leaderboard
+    self.assertEqual(response.status_code, 200)
+AssertionError: 500 != 200
+
+----------------------------------------------------------------------
+Ran 9 tests in 398.956s
+
+FAILED (failures=1)
+
+📊 Test Summary:
+Tests Run: 9
+Errors: 0
+Failures: 1
+❌ Some tests failed!
