@@ -317,3 +317,5 @@ agent_communication:
     message: "Completed testing of backend endpoints. Most endpoints are working correctly, but there's an issue with the leaderboard functionality. The leaderboard endpoint returns a 500 error with the message {'detail': \"'full_name'\"}. This suggests there's an issue with accessing the 'full_name' field in the leaderboard entry. The milestone progress update endpoint couldn't be fully tested as it requires authentication."
   - agent: "testing"
     message: "Fixed the issue with the leaderboard endpoint by adding a fallback value for the 'full_name' field. All backend endpoints are now working correctly, except for the milestone progress update endpoint which requires authentication to be fully tested."
+  - agent: "testing"
+    message: "Completed testing of frontend components. Found and fixed a critical issue with input fields losing focus after each keystroke. The issue was caused by a global CSS transition applied to all elements. Fixed by excluding input fields from the transition effect. All frontend components are now working correctly."
