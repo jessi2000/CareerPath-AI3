@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 
 # Backend URL
-BACKEND_URL = "https://4c7b5b9a-d875-452d-b60c-6238c7db2a45.preview.emergentagent.com"
+BACKEND_URL = "https://0a8006c0-17c3-4f5e-855d-0da26bc04748.preview.emergentagent.com"
 API_URL = f"{BACKEND_URL}/api"
 
 def test_api_root():
