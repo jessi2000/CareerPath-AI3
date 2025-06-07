@@ -433,7 +433,7 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    from database import client
+    from backend.database import client
     client.close()
 
 if __name__ == "__main__":
