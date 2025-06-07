@@ -119,6 +119,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "API root endpoint test passed. Returns correct API information with features list."
+      - working: true
+        agent: "testing"
+        comment: "Health check confirmed API root endpoint is working correctly. Returns API information with features list including 'Dark Mode'."
 
   - task: "User Creation and Retrieval"
     implemented: true
