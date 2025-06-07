@@ -173,7 +173,7 @@ backend:
 
   - task: "Milestone Progress Updates"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
@@ -185,6 +185,9 @@ backend:
       - working: "NA"
         agent: "testing"
         comment: "Milestone progress update test skipped - requires authentication. The endpoint is implemented but couldn't be tested without authentication."
+      - working: true
+        agent: "testing"
+        comment: "Fixed and tested the milestone progress update endpoint. It now works without authentication errors. The endpoint expects the request body to be structured with a 'progress' field containing the milestone_id and status."
 
   - task: "Leaderboard Functionality"
     implemented: true
