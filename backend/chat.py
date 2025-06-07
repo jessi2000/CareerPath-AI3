@@ -5,8 +5,8 @@ from typing import List, Optional
 from datetime import datetime
 import uuid
 
-from auth import get_current_user
-from database import db
+from backend.auth import get_current_user
+from backend.database import db
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 
