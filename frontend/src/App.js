@@ -156,7 +156,7 @@ function App() {
     }
   };
 
-  const updateMilestoneStatus = async (milestoneId, status) => {
+  const updateMilestoneStatus = useCallback(async (milestoneId, status) => {
     if (!roadmap) return;
     
     try {
