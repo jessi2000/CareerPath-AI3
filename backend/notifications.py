@@ -4,8 +4,8 @@ from typing import List, Optional
 from datetime import datetime, timedelta
 import uuid
 
-from auth import get_current_user, send_reminder_email
-from database import db
+from backend.auth import get_current_user, send_reminder_email
+from backend.database import db
 
 router = APIRouter(prefix="/api/notifications", tags=["notifications"])
 
