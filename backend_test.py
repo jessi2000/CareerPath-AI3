@@ -46,6 +46,18 @@ class CareerPathAPITest(unittest.TestCase):
             "availability_hours_per_week": 10
         }
         
+        # Specific test assessment for Data Scientist role
+        self.data_scientist_assessment = {
+            "education_level": "masters",
+            "work_experience": "mid_level",
+            "current_role": "Data Analyst",
+            "target_role": "Data Scientist",
+            "industry": "technology",  # Specifically testing technology industry
+            "skills": ["Python", "SQL", "Statistics", "Machine Learning"],
+            "timeline_months": 12,
+            "availability_hours_per_week": 15
+        }
+        
         # Test career transition scenarios
         self.career_transitions = [
             {
