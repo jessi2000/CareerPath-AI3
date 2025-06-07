@@ -203,6 +203,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Fixed the leaderboard endpoint by adding a fallback value for the 'full_name' field. The endpoint now returns a list of leaderboard entries with default values for users without a full name."
+      - working: true
+        agent: "testing"
+        comment: "Health check confirmed leaderboard endpoint is working correctly. Successfully retrieved leaderboard entries with user rankings."
 
   - task: "Authentication System"
     implemented: true
