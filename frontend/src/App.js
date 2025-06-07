@@ -26,7 +26,7 @@ function App() {
     fetchLeaderboard();
   }, []);
 
-  const fetchLeaderboard = async () => {
+  const fetchLeaderboard = useCallback(async () => {
     try {
       const response = await fetch(`${API_BASE}/api/leaderboard`);
       const data = await response.json();
@@ -34,7 +34,7 @@ function App() {
     } catch (error) {
       console.error('Error fetching leaderboard:', error);
     }
-  };
+  }, []);
 
   const simulateLoadingStages = () => {
     const stages = [
