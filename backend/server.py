@@ -139,26 +139,37 @@ class AIRoadmapService:
             # Generate enhanced prompt with current market context
             current_year = datetime.now().year
             prompt = f"""
-            Create a career roadmap for transitioning from {assessment.current_role or 'current role'} to {assessment.target_role} in the {assessment.industry} industry.
+            CRITICAL: Create a career roadmap SPECIFICALLY for transitioning from "{assessment.current_role or 'current position'}" to "{assessment.target_role}" in the {assessment.industry} industry.
             
-            User Details:
-            - Education: {assessment.education_level}
-            - Experience: {assessment.work_experience}
-            - Skills: {', '.join(assessment.skills)}
-            - Timeline: {assessment.timeline_months} months
-            - Hours/Week: {assessment.availability_hours_per_week}
+            MANDATORY USER REQUIREMENTS TO HONOR:
+            - Education Level: {assessment.education_level}
+            - Work Experience: {assessment.work_experience}
+            - Current Skills: {', '.join(assessment.skills) if assessment.skills else 'Skills to be assessed'}
+            - Available Time: {assessment.timeline_months} months with {assessment.availability_hours_per_week} hours per week
+            - Target Industry: {assessment.industry}
+            - EXACT Target Role: {assessment.target_role}
+            
+            VALIDATION RULES:
+            1. Every milestone MUST directly contribute to achieving "{assessment.target_role}" specifically
+            2. Timeline MUST fit within {assessment.timeline_months} months total
+            3. Individual milestone hours MUST be realistic for {assessment.availability_hours_per_week} hours/week commitment
+            4. Skills progression MUST build from existing skills: {', '.join(assessment.skills) if assessment.skills else 'basic level'}
+            5. Industry focus MUST remain on {assessment.industry} throughout
+            
+            CURRENT MARKET CONTEXT ({current_year}):
+            Research and include specific {assessment.industry} industry requirements for {assessment.target_role} in {current_year}.
             
             Return ONLY valid JSON with this structure (no other text):
             {{
-                "title": "Career Path: Current Role to Target Role - 2025",
-                "description": "Roadmap description",
-                "market_context": "Current market insights for the target role",
+                "title": "Career Transition: {assessment.current_role or 'Current Role'} → {assessment.target_role} in {assessment.industry}",
+                "description": "Targeted {assessment.timeline_months}-month roadmap specifically designed for transitioning to {assessment.target_role} in {assessment.industry}",
+                "market_context": "Specific current market insights for {assessment.target_role} in {assessment.industry} industry",
                 "milestones": [
                     {{
-                        "title": "Milestone 1",
-                        "description": "What to accomplish",
-                        "estimated_hours": 30,
-                        "market_relevance": "Why important in 2025",
+                        "title": "Foundation Building for {assessment.target_role}",
+                        "description": "Specific skills needed for {assessment.target_role} based on current {assessment.industry} requirements",
+                        "estimated_hours": {assessment.availability_hours_per_week * 4},
+                        "market_relevance": "Why this milestone is critical for {assessment.target_role} in {current_year}",
                         "resources": [
                             {{"title": "Course Name", "url": "https://coursera.org/course", "type": "course", "provider": "Coursera"}},
                             {{"title": "Book Name", "url": "https://amazon.com/book", "type": "book", "author": "Author"}}
@@ -166,12 +177,12 @@ class AIRoadmapService:
                         "order": 1
                     }}
                 ],
-                "total_estimated_hours": 240,
-                "current_market_salary": "Salary expectations",
-                "success_metrics": "How to measure success"
+                "total_estimated_hours": {assessment.timeline_months * assessment.availability_hours_per_week * 4},
+                "current_market_salary": "Specific salary expectations for {assessment.target_role} in {assessment.industry}",
+                "success_metrics": "Measurable outcomes that prove readiness for {assessment.target_role}"
             }}
             
-            Generate 6-10 milestones with real, current resources and links.
+            Generate 6-8 milestones that EXACTLY match the user's {assessment.target_role} goal in {assessment.industry}.
             """
             
             user_message = UserMessage(text=prompt)
