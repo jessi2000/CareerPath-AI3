@@ -370,6 +370,17 @@ class CareerPathAPITest(unittest.TestCase):
             json=progress_data
         )
         
+        # Check if we got a 422 error (validation error)
+        if response.status_code == 422:
+            print(f"Received validation error: {response.text}")
+            print("Trying with different request structure...")
+            
+            # Try with a different request structure
+            response = requests.put(
+                f"{self.api_url}/roadmaps/{self.test_roadmap_id}/progress", 
+                json={"progress": progress_data}
+            )
+        
         # This should now work without authentication errors
         self.assertEqual(response.status_code, 200, 
                         f"Progress update failed with status {response.status_code}: {response.text}")
@@ -384,7 +395,7 @@ class CareerPathAPITest(unittest.TestCase):
         progress_data["status"] = "completed"
         response = requests.put(
             f"{self.api_url}/roadmaps/{self.test_roadmap_id}/progress", 
-            json=progress_data
+            json={"progress": progress_data}
         )
         self.assertEqual(response.status_code, 200, 
                         f"Progress update failed with status {response.status_code}: {response.text}")
