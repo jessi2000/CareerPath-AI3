@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the CareerPath AI backend application. The app has basic API endpoints, features for user creation and retrieval, career roadmap generation using Claude AI, roadmap saving and retrieval, milestone progress updates, and leaderboard functionality. The database is MongoDB with collections for users and roadmaps, and the authentication is JWT-based."
+user_problem_statement: "Continue this project to make it dark mode and fix the react issue where user can only type 1 letter in the form. The CareerPath AI application has been previously tested with working backend functionality including API endpoints, user management, Claude AI integration, and leaderboard features. Current task is to implement full dark mode design across all screens and verify/fix any remaining input focus issues."
 
 backend:
   - task: "API Root Endpoint"
