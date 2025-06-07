@@ -13,12 +13,12 @@ import asyncio
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 # Import new modules
-from auth import router as auth_router, get_current_user
-from social import router as social_router
-from chat import router as chat_router
-from notifications import router as notifications_router, notify_milestone_completed
-from socket_handler import socket_app, sio
-from database import db
+from backend.auth import router as auth_router, get_current_user
+from backend.social import router as social_router
+from backend.chat import router as chat_router
+from backend.notifications import router as notifications_router, notify_milestone_completed
+from backend.socket_handler import socket_app, sio
+from backend.database import db
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
