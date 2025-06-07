@@ -8,7 +8,7 @@ from typing import Optional
 import os
 import uuid
 
-from database import db
+from backend.database import db
 
 router = APIRouter(prefix="/api/auth", tags=["authentication"])
 security = HTTPBearer()
