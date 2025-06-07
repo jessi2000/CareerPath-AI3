@@ -201,11 +201,11 @@ function App() {
   );
 
   const AssessmentScreen = () => (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 py-12 px-4">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Career Assessment</h2>
-          <p className="text-gray-600 mb-8">Help us understand your background and goals to create your personalized roadmap</p>
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-white/20">
+          <h2 className="text-3xl font-bold text-white mb-2">Career Assessment</h2>
+          <p className="text-gray-300 mb-8">Help us understand your background and goals to create your personalized roadmap</p>
           
           <form onSubmit={handleAssessmentSubmit} className="space-y-6">
             <div>
