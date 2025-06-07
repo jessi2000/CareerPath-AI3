@@ -99,8 +99,10 @@ class LeaderboardEntry(BaseModel):
 class AIRoadmapService:
     def __init__(self):
         self.api_key = os.environ.get('CLAUDE_API_KEY')
-        if not self.api_key:
-            raise ValueError("CLAUDE_API_KEY not found in environment variables")
+        self.use_fallback = False
+        if not self.api_key or self.api_key == "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":
+            self.use_fallback = True
+            logging.warning("Using fallback roadmap generation - Claude API key not valid")
     
     async def generate_roadmap(self, assessment: AssessmentData, user_name: str) -> CareerRoadmap:
         try:
