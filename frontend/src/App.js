@@ -209,117 +209,131 @@ function App() {
           
           <form onSubmit={handleAssessmentSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Education Level</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Education Level</label>
               <select 
                 value={assessmentData.education_level} 
                 onChange={(e) => setAssessmentData({...assessmentData, education_level: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
               >
-                <option value="">Select education level</option>
-                <option value="high_school">High School</option>
-                <option value="bachelors">Bachelor's Degree</option>
-                <option value="masters">Master's Degree</option>
-                <option value="phd">PhD</option>
-                <option value="bootcamp">Bootcamp/Certificate</option>
+                <option value="" className="text-gray-900">Select education level</option>
+                <option value="high_school" className="text-gray-900">High School</option>
+                <option value="bachelors" className="text-gray-900">Bachelor's Degree</option>
+                <option value="masters" className="text-gray-900">Master's Degree</option>
+                <option value="phd" className="text-gray-900">PhD</option>
+                <option value="bootcamp" className="text-gray-900">Bootcamp/Certificate</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Work Experience</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Work Experience</label>
               <select 
                 value={assessmentData.work_experience} 
                 onChange={(e) => setAssessmentData({...assessmentData, work_experience: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
               >
-                <option value="">Select experience level</option>
-                <option value="entry_level">Entry Level (0-2 years)</option>
-                <option value="mid_level">Mid Level (3-5 years)</option>
-                <option value="senior_level">Senior Level (6-10 years)</option>
-                <option value="executive">Executive (10+ years)</option>
+                <option value="" className="text-gray-900">Select experience level</option>
+                <option value="entry_level" className="text-gray-900">Entry Level (0-2 years)</option>
+                <option value="mid_level" className="text-gray-900">Mid Level (3-5 years)</option>
+                <option value="senior_level" className="text-gray-900">Senior Level (6-10 years)</option>
+                <option value="executive" className="text-gray-900">Executive (10+ years)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Current Role (Optional)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Current Role (Optional)</label>
               <input 
                 type="text"
                 value={assessmentData.current_role} 
                 onChange={(e) => setAssessmentData({...assessmentData, current_role: e.target.value})}
                 placeholder="e.g., Marketing Associate, Software Developer"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Target Role</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Target Role</label>
               <input 
                 type="text"
                 value={assessmentData.target_role} 
                 onChange={(e) => setAssessmentData({...assessmentData, target_role: e.target.value})}
                 placeholder="e.g., Product Manager, Senior Developer, Data Scientist"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Industry</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Industry</label>
               <select 
                 value={assessmentData.industry} 
                 onChange={(e) => setAssessmentData({...assessmentData, industry: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
               >
-                <option value="">Select industry</option>
-                <option value="technology">Technology</option>
-                <option value="finance">Finance</option>
-                <option value="healthcare">Healthcare</option>
-                <option value="education">Education</option>
-                <option value="marketing">Marketing</option>
-                <option value="consulting">Consulting</option>
-                <option value="retail">Retail</option>
-                <option value="manufacturing">Manufacturing</option>
-                <option value="other">Other</option>
+                <option value="" className="text-gray-900">Select industry</option>
+                <option value="technology" className="text-gray-900">Technology</option>
+                <option value="finance" className="text-gray-900">Finance</option>
+                <option value="healthcare" className="text-gray-900">Healthcare</option>
+                <option value="education" className="text-gray-900">Education</option>
+                <option value="marketing" className="text-gray-900">Marketing</option>
+                <option value="consulting" className="text-gray-900">Consulting</option>
+                <option value="retail" className="text-gray-900">Retail</option>
+                <option value="manufacturing" className="text-gray-900">Manufacturing</option>
+                <option value="other" className="text-gray-900">Other</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Current Skills</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Current Skills</label>
               <input 
                 type="text"
                 value={assessmentData.skills.join(', ')} 
-                onChange={(e) => setAssessmentData({...assessmentData, skills: e.target.value.split(',').map(s => s.trim()).filter(s => s)})}
+                onChange={(e) => {
+                  const skillsText = e.target.value;
+                  const skillsArray = skillsText.split(',').map(s => s.trim()).filter(s => s.length > 0);
+                  setAssessmentData({...assessmentData, skills: skillsArray});
+                }}
                 placeholder="e.g., Python, Project Management, Excel, Communication"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
               />
-              <p className="text-sm text-gray-500 mt-1">Separate skills with commas</p>
+              <p className="text-sm text-gray-400 mt-1">Separate skills with commas</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Timeline (months)</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Timeline (months)</label>
                 <input 
                   type="number"
                   value={assessmentData.timeline_months} 
-                  onChange={(e) => setAssessmentData({...assessmentData, timeline_months: parseInt(e.target.value)})}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '' || (!isNaN(value) && parseInt(value) >= 1 && parseInt(value) <= 36)) {
+                      setAssessmentData({...assessmentData, timeline_months: value === '' ? 1 : parseInt(value)});
+                    }
+                  }}
                   min="1"
                   max="36"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Hours per week</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Hours per week</label>
                 <input 
                   type="number"
                   value={assessmentData.availability_hours_per_week} 
-                  onChange={(e) => setAssessmentData({...assessmentData, availability_hours_per_week: parseInt(e.target.value)})}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '' || (!isNaN(value) && parseInt(value) >= 1 && parseInt(value) <= 40)) {
+                      setAssessmentData({...assessmentData, availability_hours_per_week: value === '' ? 1 : parseInt(value)});
+                    }
+                  }}
                   min="1"
                   max="40"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                   required
                 />
               </div>
@@ -329,7 +343,7 @@ function App() {
               <button 
                 type="button"
                 onClick={() => setCurrentStep('welcome')}
-                className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                className="flex-1 bg-white/20 text-white py-3 rounded-lg font-semibold hover:bg-white/30 transition-colors border border-white/30"
               >
                 Back
               </button>
