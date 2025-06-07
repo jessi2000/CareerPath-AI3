@@ -180,19 +180,75 @@ function App() {
         );
         setRoadmap({ ...roadmap, milestones: updatedMilestones, progress_percentage: result.progress_percentage });
         
-        // Show success message for completion
+        // Show success message for completion with more professional feedback
         if (status === 'completed') {
-          alert('🎉 Milestone completed! You earned 10 points!');
+          // Create a professional success notification
+          const notification = document.createElement('div');
+          notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform transition-all duration-500 ease-out';
+          notification.innerHTML = `
+            <div class="flex items-center space-x-3">
+              <span class="text-2xl">🎉</span>
+              <div>
+                <div class="font-semibold">Milestone Completed!</div>
+                <div class="text-sm opacity-90">+10 points earned • Great progress!</div>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(notification);
+          
+          // Auto-remove notification after 4 seconds
+          setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => document.body.removeChild(notification), 500);
+          }, 4000);
+        } else if (status === 'in_progress') {
+          // Professional in-progress notification
+          const notification = document.createElement('div');
+          notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform transition-all duration-500 ease-out';
+          notification.innerHTML = `
+            <div class="flex items-center space-x-3">
+              <span class="text-2xl">🚀</span>
+              <div>
+                <div class="font-semibold">Milestone Started!</div>
+                <div class="text-sm opacity-90">You're making great progress!</div>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => document.body.removeChild(notification), 500);
+          }, 3000);
         }
         
         // Refresh leaderboard
         fetchLeaderboard();
       } else {
-        throw new Error('Failed to update milestone status');
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to update milestone status');
       }
     } catch (error) {
       console.error('Error updating milestone:', error);
-      alert('Failed to update milestone status. Please try again.');
+      
+      // Professional error notification
+      const notification = document.createElement('div');
+      notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform transition-all duration-500 ease-out';
+      notification.innerHTML = `
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl">⚠️</span>
+          <div>
+            <div class="font-semibold">Update Failed</div>
+            <div class="text-sm opacity-90">Please check your connection and try again</div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => document.body.removeChild(notification), 500);
+      }, 5000);
     }
   };
 
