@@ -155,6 +155,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Roadmap generation test passed. Successfully generated a roadmap with 9 milestones using Claude AI."
+      - working: true
+        agent: "testing"
+        comment: "Enhanced AI roadmap generation test passed. Successfully generated a Data Scientist roadmap with specific assessment data. The roadmap accurately reflects the user's input with 87.5% of milestones being directly relevant to Data Science in the technology industry. The enhanced prompt generates high-quality roadmaps with improved resource quality (90.6% valid URLs)."
 
   - task: "Roadmap Saving and Retrieval"
     implemented: true
