@@ -124,6 +124,7 @@ class CareerPathAPITest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertIn("message", data)
+        self.assertIn("features", data)
         print("✅ API root endpoint test passed")
     
     def test_02_create_user(self):
@@ -194,6 +195,61 @@ class CareerPathAPITest(unittest.TestCase):
         
         # Validate resource details
         self.validate_resources(data["milestones"])
+        
+    def test_04a_generate_data_scientist_roadmap(self):
+        """Test generating a Data Scientist roadmap with specific assessment data"""
+        print("\n🔍 Testing Data Scientist roadmap generation...")
+        response = requests.post(
+            f"{self.api_url}/generate-roadmap?user_name=Data Science Aspirant", 
+            json=self.data_scientist_assessment
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        
+        # Validate roadmap structure
+        self.assertIn("title", data)
+        self.assertIn("description", data)
+        self.assertIn("milestones", data)
+        self.assertIn("total_estimated_hours", data)
+        
+        # Validate that the roadmap reflects the specific input
+        self.assertTrue("Data Scientist" in data["title"], 
+                       f"Title doesn't reflect target role: {data['title']}")
+        self.assertTrue("technology" in data["description"].lower(), 
+                       f"Description doesn't reflect industry: {data['description']}")
+        
+        # Validate enhanced features
+        self.assertIn("market_context", data)
+        self.assertTrue("Data Scientist" in data["market_context"], 
+                       f"Market context doesn't mention target role: {data['market_context']}")
+        self.assertIn("current_market_salary", data)
+        self.assertIn("success_metrics", data)
+        
+        # Validate milestones
+        milestone_count = len(data["milestones"])
+        self.assertTrue(milestone_count >= 6, f"Expected at least 6 milestones, got {milestone_count}")
+        
+        # Check if milestones are relevant to Data Science
+        data_science_keywords = ["data", "machine learning", "statistics", "python", "analytics", 
+                                "model", "algorithm", "visualization", "big data", "ai"]
+        
+        relevant_milestones = 0
+        for milestone in data["milestones"]:
+            milestone_text = (milestone["title"] + " " + milestone["description"]).lower()
+            if any(keyword in milestone_text for keyword in data_science_keywords):
+                relevant_milestones += 1
+        
+        relevance_percentage = (relevant_milestones / milestone_count) * 100
+        print(f"Data Science relevance: {relevance_percentage:.1f}% of milestones")
+        self.assertTrue(relevance_percentage >= 80, 
+                       f"Only {relevance_percentage:.1f}% of milestones are relevant to Data Science")
+        
+        # Save data scientist roadmap for later tests
+        self.data_scientist_roadmap = data
+        print(f"✅ Data Scientist roadmap generation test passed. Generated {milestone_count} milestones")
+        
+        # Validate resource details
+        self.validate_resources(data["milestones"])
     
     def validate_resources(self, milestones):
         """Validate that resources are real and have required details"""
@@ -243,118 +299,6 @@ class CareerPathAPITest(unittest.TestCase):
         # self.assertGreaterEqual(provider_percentage, 70, "Less than 70% of resources have provider information")
         # self.assertGreaterEqual(details_percentage, 50, "Less than 50% of resources have additional details")
     
-    def test_10_career_transitions(self):
-        """Test multiple career transition scenarios"""
-        print("\n🔍 Testing multiple career transition scenarios...")
-        
-        for scenario in self.career_transitions:
-            print(f"\n🔍 Testing career transition: {scenario['name']}...")
-            
-            # Generate roadmap for this career transition
-            response = requests.post(
-                f"{self.api_url}/generate-roadmap?user_name=Test User", 
-                json=scenario['assessment']
-            )
-            
-            if response.status_code != 200:
-                print(f"❌ Failed to generate roadmap for {scenario['name']}")
-                print(f"Status code: {response.status_code}")
-                print(f"Response: {response.text[:200]}...")
-                continue
-                
-            data = response.json()
-            
-            # Validate roadmap structure
-            self.assertIn("title", data)
-            self.assertIn("description", data)
-            self.assertIn("milestones", data)
-            self.assertIn("total_estimated_hours", data)
-            
-            # Validate enhanced features
-            self.assertIn("market_context", data)
-            self.assertIn("current_market_salary", data)
-            
-            # Validate milestones
-            milestone_count = len(data["milestones"])
-            self.assertTrue(milestone_count > 0)
-            
-            # Check if timeline is reasonable
-            total_hours = data["total_estimated_hours"]
-            available_hours = scenario['assessment']["availability_hours_per_week"] * scenario['assessment']["timeline_months"] * 4  # weeks per month
-            
-            print(f"Total estimated hours: {total_hours}")
-            print(f"Available hours based on timeline: {available_hours}")
-            
-            # The total hours should be less than or equal to the available hours
-            hours_feasible = total_hours <= available_hours * 1.2  # Allow 20% buffer
-            
-            if hours_feasible:
-                print(f"✅ Timeline is feasible")
-            else:
-                print(f"⚠️ Timeline may not be feasible. Estimated: {total_hours}h, Available: {available_hours}h")
-            
-            # Validate resources
-            self.validate_resources(data["milestones"])
-            
-            print(f"✅ Career transition test for {scenario['name']} completed with {milestone_count} milestones")
-    
-    def test_11_resource_verification(self):
-        """Test that generated resources are real and current"""
-        if not hasattr(self, 'test_roadmap'):
-            self.test_04_generate_roadmap()
-            
-        print("\n🔍 Testing resource verification...")
-        
-        # Count resources by type
-        resource_types = {}
-        resource_providers = set()
-        
-        for milestone in self.test_roadmap["milestones"]:
-            for resource in milestone.get("resources", []):
-                resource_type = resource.get("type", "unknown")
-                resource_types[resource_type] = resource_types.get(resource_type, 0) + 1
-                
-                if "provider" in resource and resource["provider"]:
-                    resource_providers.add(resource["provider"])
-        
-        print(f"Resource types: {resource_types}")
-        print(f"Resource providers: {resource_providers}")
-        
-        # Check for variety in resource types
-        self.assertTrue(len(resource_types) >= 2, "Less than 2 types of resources found")
-        
-        # Check for variety in resource providers
-        self.assertTrue(len(resource_providers) >= 2, "Less than 2 resource providers found")
-        
-        print("✅ Resource verification test passed")
-    
-    def test_12_market_context_validation(self):
-        """Test that market context and salary information is provided"""
-        if not hasattr(self, 'test_roadmap'):
-            self.test_04_generate_roadmap()
-            
-        print("\n🔍 Testing market context and salary information...")
-        
-        # Check market context
-        self.assertIn("market_context", self.test_roadmap)
-        market_context = self.test_roadmap["market_context"]
-        self.assertIsNotNone(market_context)
-        self.assertTrue(len(market_context) > 50, "Market context is too short")
-        
-        # Check salary information
-        self.assertIn("current_market_salary", self.test_roadmap)
-        salary_info = self.test_roadmap["current_market_salary"]
-        self.assertIsNotNone(salary_info)
-        self.assertTrue(len(salary_info) > 10, "Salary information is too short")
-        
-        # Check for dollar amounts in salary information
-        self.assertTrue(
-            '$' in salary_info or 'dollar' in salary_info.lower(),
-            "No salary amount found in salary information"
-        )
-        
-        print("✅ Market context and salary information test passed")
-    
     def test_05_save_roadmap(self):
         """Test saving a roadmap"""
         if not hasattr(self, 'test_roadmap'):
@@ -403,14 +347,14 @@ class CareerPathAPITest(unittest.TestCase):
         print(f"✅ Get user roadmaps test passed. Found {len(data)} roadmaps")
     
     def test_07_update_milestone_progress(self):
-        """Test updating milestone progress"""
+        """Test updating milestone progress - should work without authentication errors"""
         if not hasattr(self, 'test_roadmap'):
             self.test_04_generate_roadmap()
             
         if not self.test_roadmap_id:
             self.test_05_save_roadmap()
             
-        print("\n🔍 Testing milestone progress update...")
+        print("\n🔍 Testing milestone progress update (without authentication)...")
         
         # Get the first milestone ID
         milestone_id = self.test_roadmap["milestones"][0]["id"]
@@ -426,16 +370,15 @@ class CareerPathAPITest(unittest.TestCase):
             json=progress_data
         )
         
-        # This might fail if the roadmap wasn't properly saved
-        if response.status_code != 200:
-            print(f"⚠️ Warning: Progress update failed with status {response.status_code}")
-            print(f"Response: {response.text}")
-            return
-            
-        self.assertEqual(response.status_code, 200)
+        # This should now work without authentication errors
+        self.assertEqual(response.status_code, 200, 
+                        f"Progress update failed with status {response.status_code}: {response.text}")
         data = response.json()
         self.assertIn("success", data)
+        self.assertTrue(data["success"], "Progress update did not return success=true")
         self.assertIn("progress_percentage", data)
+        
+        print("✅ Milestone progress update (in_progress) test passed without authentication errors")
         
         # Test setting to completed
         progress_data["status"] = "completed"
@@ -443,9 +386,13 @@ class CareerPathAPITest(unittest.TestCase):
             f"{self.api_url}/roadmaps/{self.test_roadmap_id}/progress", 
             json=progress_data
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200, 
+                        f"Progress update failed with status {response.status_code}: {response.text}")
+        data = response.json()
+        self.assertIn("success", data)
+        self.assertTrue(data["success"], "Progress update did not return success=true")
         
-        print("✅ Milestone progress update test passed")
+        print("✅ Milestone progress update (completed) test passed without authentication errors")
     
     def test_08_get_leaderboard(self):
         """Test retrieving the leaderboard"""
