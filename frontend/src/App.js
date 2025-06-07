@@ -200,19 +200,63 @@ function App() {
     </div>
   );
 
-  const AssessmentScreen = () => (
+  const AssessmentScreen = () => {
+  // Use local state for input values to prevent focus loss
+  const [localInputs, setLocalInputs] = useState({
+    education_level: assessmentData.education_level,
+    work_experience: assessmentData.work_experience,
+    current_role: assessmentData.current_role,
+    target_role: assessmentData.target_role,
+    industry: assessmentData.industry,
+    skills: assessmentData.skills.join(', '),
+    timeline_months: assessmentData.timeline_months,
+    availability_hours_per_week: assessmentData.availability_hours_per_week
+  });
+
+  // Update assessment data only when form is submitted
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Convert skills string to array
+    const skillsArray = localInputs.skills.split(',').map(s => s.trim()).filter(s => s.length > 0);
+    
+    // Update the main state with all form values
+    setAssessmentData({
+      education_level: localInputs.education_level,
+      work_experience: localInputs.work_experience,
+      current_role: localInputs.current_role,
+      target_role: localInputs.target_role,
+      industry: localInputs.industry,
+      skills: skillsArray,
+      timeline_months: localInputs.timeline_months,
+      availability_hours_per_week: localInputs.availability_hours_per_week
+    });
+    
+    // Call the original submit handler
+    handleAssessmentSubmit(e);
+  };
+
+  // Handle local input changes without triggering re-renders
+  const handleInputChange = (field, value) => {
+    setLocalInputs({
+      ...localInputs,
+      [field]: value
+    });
+  };
+
+  return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-white/20">
           <h2 className="text-3xl font-bold text-white mb-2">Career Assessment</h2>
           <p className="text-gray-300 mb-8">Help us understand your background and goals to create your personalized roadmap</p>
           
-          <form onSubmit={handleAssessmentSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Education Level</label>
               <select 
-                value={assessmentData.education_level} 
-                onChange={(e) => setAssessmentData({...assessmentData, education_level: e.target.value})}
+                value={localInputs.education_level} 
+                onChange={(e) => handleInputChange('education_level', e.target.value)}
                 className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
               >
@@ -228,8 +272,8 @@ function App() {
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Work Experience</label>
               <select 
-                value={assessmentData.work_experience} 
-                onChange={(e) => setAssessmentData({...assessmentData, work_experience: e.target.value})}
+                value={localInputs.work_experience} 
+                onChange={(e) => handleInputChange('work_experience', e.target.value)}
                 className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
               >
@@ -245,8 +289,8 @@ function App() {
               <label className="block text-sm font-medium text-gray-300 mb-2">Current Role (Optional)</label>
               <input 
                 type="text"
-                value={assessmentData.current_role} 
-                onChange={(e) => setAssessmentData({...assessmentData, current_role: e.target.value})}
+                value={localInputs.current_role} 
+                onChange={(e) => handleInputChange('current_role', e.target.value)}
                 placeholder="e.g., Marketing Associate, Software Developer"
                 className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
               />
@@ -256,8 +300,8 @@ function App() {
               <label className="block text-sm font-medium text-gray-300 mb-2">Target Role</label>
               <input 
                 type="text"
-                value={assessmentData.target_role} 
-                onChange={(e) => setAssessmentData({...assessmentData, target_role: e.target.value})}
+                value={localInputs.target_role} 
+                onChange={(e) => handleInputChange('target_role', e.target.value)}
                 placeholder="e.g., Product Manager, Senior Developer, Data Scientist"
                 className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
@@ -267,8 +311,8 @@ function App() {
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Industry</label>
               <select 
-                value={assessmentData.industry} 
-                onChange={(e) => setAssessmentData({...assessmentData, industry: e.target.value})}
+                value={localInputs.industry} 
+                onChange={(e) => handleInputChange('industry', e.target.value)}
                 className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
                 required
               >
@@ -289,12 +333,8 @@ function App() {
               <label className="block text-sm font-medium text-gray-300 mb-2">Current Skills</label>
               <input 
                 type="text"
-                value={assessmentData.skills.join(', ')} 
-                onChange={(e) => {
-                  const skillsText = e.target.value;
-                  const skillsArray = skillsText.split(',').map(s => s.trim()).filter(s => s.length > 0);
-                  setAssessmentData({...assessmentData, skills: skillsArray});
-                }}
+                value={localInputs.skills} 
+                onChange={(e) => handleInputChange('skills', e.target.value)}
                 placeholder="e.g., Python, Project Management, Excel, Communication"
                 className="w-full p-3 border border-white/30 bg-white/20 text-white rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-gray-300"
               />
@@ -306,11 +346,11 @@ function App() {
                 <label className="block text-sm font-medium text-gray-300 mb-2">Timeline (months)</label>
                 <input 
                   type="number"
-                  value={assessmentData.timeline_months} 
+                  value={localInputs.timeline_months} 
                   onChange={(e) => {
                     const value = e.target.value;
                     if (value === '' || (!isNaN(value) && parseInt(value) >= 1 && parseInt(value) <= 36)) {
-                      setAssessmentData({...assessmentData, timeline_months: value === '' ? 1 : parseInt(value)});
+                      handleInputChange('timeline_months', value === '' ? 1 : parseInt(value));
                     }
                   }}
                   min="1"
@@ -324,11 +364,11 @@ function App() {
                 <label className="block text-sm font-medium text-gray-300 mb-2">Hours per week</label>
                 <input 
                   type="number"
-                  value={assessmentData.availability_hours_per_week} 
+                  value={localInputs.availability_hours_per_week} 
                   onChange={(e) => {
                     const value = e.target.value;
                     if (value === '' || (!isNaN(value) && parseInt(value) >= 1 && parseInt(value) <= 40)) {
-                      setAssessmentData({...assessmentData, availability_hours_per_week: value === '' ? 1 : parseInt(value)});
+                      handleInputChange('availability_hours_per_week', value === '' ? 1 : parseInt(value));
                     }
                   }}
                   min="1"
@@ -360,6 +400,7 @@ function App() {
       </div>
     </div>
   );
+};
 
   const RoadmapScreen = () => (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 py-12 px-4">
