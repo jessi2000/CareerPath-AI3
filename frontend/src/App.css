@@ -31,7 +31,8 @@
 
 /* Exclude inputs from transitions to prevent focus issues */
 input, textarea, select, button {
-  transition: none;
+  transition: none !important;
+  transition-property: none !important;
 }
 
 /* Custom gradient backgrounds */
