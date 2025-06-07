@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, BackgroundTasks
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -12,21 +12,24 @@ from datetime import datetime
 import asyncio
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
+# Import new modules
+from auth import router as auth_router, get_current_user
+from social import router as social_router
+from chat import router as chat_router
+from notifications import router as notifications_router, notify_milestone_completed
+from socket_handler import socket_app, sio
+from database import db
+
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
-
-# Create the main app without a prefix
-app = FastAPI(title="CareerPath AI API", version="1.0.0")
+# Create the main app
+app = FastAPI(title="CareerPath AI API", version="2.0.0")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-# Models
+# Original Models (enhanced)
 class UserProfile(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
@@ -41,6 +44,10 @@ class UserProfile(BaseModel):
     availability_hours_per_week: int
     created_at: datetime = Field(default_factory=datetime.utcnow)
     total_points: int = 0
+    level: int = 1
+    badges: List[dict] = []
+    completed_courses: List[str] = []
+    knowledge_areas: List[str] = []
 
 class AssessmentData(BaseModel):
     education_level: str
@@ -61,6 +68,7 @@ class Milestone(BaseModel):
     resources: List[Dict[str, str]] = []
     status: str = "not_started"  # not_started, in_progress, completed
     order: int
+    completed_at: Optional[datetime] = None
 
 class CareerRoadmap(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -84,8 +92,10 @@ class LeaderboardEntry(BaseModel):
     total_points: int
     milestones_completed: int
     rank: int
+    level: int = 1
+    badges_count: int = 0
 
-# AI Service for Roadmap Generation
+# Enhanced AI Service
 class AIRoadmapService:
     def __init__(self):
         self.api_key = os.environ.get('CLAUDE_API_KEY')
@@ -244,10 +254,10 @@ class AIRoadmapService:
 # Initialize AI service
 ai_service = AIRoadmapService()
 
-# Routes
+# Enhanced Routes
 @api_router.get("/")
 async def root():
-    return {"message": "CareerPath AI API is running"}
+    return {"message": "CareerPath AI API v2.0 is running", "features": ["Authentication", "Social", "Chat", "Notifications", "Dark Mode"]}
 
 @api_router.post("/users", response_model=UserProfile)
 async def create_user(profile: UserProfile):
@@ -294,7 +304,12 @@ async def get_user_roadmaps(user_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @api_router.put("/roadmaps/{roadmap_id}/progress")
-async def update_milestone_progress(roadmap_id: str, progress: ProgressUpdate):
+async def update_milestone_progress(
+    roadmap_id: str, 
+    progress: ProgressUpdate, 
+    background_tasks: BackgroundTasks,
+    current_user: dict = Depends(get_current_user)
+):
     try:
         # Get the roadmap
         roadmap = await db.roadmaps.find_one({"id": roadmap_id})
@@ -303,9 +318,13 @@ async def update_milestone_progress(roadmap_id: str, progress: ProgressUpdate):
         
         # Find the milestone to update
         milestone_found = False
+        milestone_title = ""
         for milestone in roadmap["milestones"]:
             if milestone["id"] == progress.milestone_id:
                 milestone["status"] = progress.status
+                milestone_title = milestone["title"]
+                if progress.status == "completed":
+                    milestone["completed_at"] = datetime.utcnow()
                 milestone_found = True
                 break
         
@@ -323,11 +342,34 @@ async def update_milestone_progress(roadmap_id: str, progress: ProgressUpdate):
             {"$set": {"milestones": roadmap["milestones"], "progress_percentage": progress_percentage}}
         )
         
-        # Award points to user if milestone completed
+        # Award points and update achievements if milestone completed
         if progress.status == "completed" and roadmap.get("user_id"):
+            points_earned = 10
+            
+            # Update user stats
             await db.users.update_one(
                 {"id": roadmap["user_id"]},
-                {"$inc": {"total_points": 10}}
+                {
+                    "$inc": {
+                        "total_points": points_earned,
+                        "achievements.milestones_completed": 1,
+                        "achievements.points_earned": points_earned
+                    }
+                }
+            )
+            
+            # Send notification
+            background_tasks.add_task(
+                notify_milestone_completed,
+                roadmap["user_id"],
+                milestone_title,
+                points_earned
+            )
+            
+            # Add to knowledge areas
+            await db.users.update_one(
+                {"id": roadmap["user_id"]},
+                {"$addToSet": {"knowledge_areas": milestone_title}}
             )
         
         return {"success": True, "progress_percentage": progress_percentage}
@@ -350,9 +392,11 @@ async def get_leaderboard():
                 completed_milestones += sum(1 for m in roadmap["milestones"] if m["status"] == "completed")
             
             entry = LeaderboardEntry(
-                user_name=user["name"],
-                total_points=user["total_points"],
+                user_name=user["full_name"],
+                total_points=user.get("total_points", 0),
                 milestones_completed=completed_milestones,
+                level=user.get("level", 1),
+                badges_count=len(user.get("badges", [])),
                 rank=i + 1
             )
             leaderboard.append(entry)
@@ -361,9 +405,14 @@ async def get_leaderboard():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Include the router in the main app
+# Include all routers
 app.include_router(api_router)
+app.include_router(auth_router)
+app.include_router(social_router)
+app.include_router(chat_router)
+app.include_router(notifications_router)
 
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -371,6 +420,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount Socket.IO app
+app.mount("/socket.io", socket_app)
 
 # Configure logging
 logging.basicConfig(
@@ -381,4 +433,9 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
+    from database import client
     client.close()
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)
