@@ -250,7 +250,7 @@ function App() {
         setTimeout(() => document.body.removeChild(notification), 500);
       }, 5000);
     }
-  };
+  }, [roadmap, fetchLeaderboard]);
 
   const resetApp = () => {
     setCurrentStep('welcome');
