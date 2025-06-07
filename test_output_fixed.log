@@ -8,14 +8,14 @@ ok
 test_02_create_user (__main__.CareerPathAPITest.test_02_create_user)
 Test creating a new user ... 
 🔍 Testing user creation...
-✅ User creation test passed. User ID: 8ee3a693-c12c-4582-8b01-ddb407b28ca7
+✅ User creation test passed. User ID: 6afea9f8-633f-4e8d-b4da-203a54b1b49e
 ok
 test_03_get_user (__main__.CareerPathAPITest.test_03_get_user)
 Test retrieving a user by ID ... 
 🔍 Testing user creation...
-✅ User creation test passed. User ID: 2d85404c-1ed2-4932-9edf-d99bcd071fd0
+✅ User creation test passed. User ID: 5617b3e7-e03b-4f35-8ff8-50fe2ebcb705
 
-🔍 Testing get user with ID: 2d85404c-1ed2-4932-9edf-d99bcd071fd0...
+🔍 Testing get user with ID: 5617b3e7-e03b-4f35-8ff8-50fe2ebcb705...
 ✅ Get user test passed
 ok
 test_04_generate_roadmap (__main__.CareerPathAPITest.test_04_generate_roadmap)
@@ -25,27 +25,27 @@ Test generating a roadmap with AI ...
 
 🔍 Validating resource quality...
 Total resources: 32
-Resources with valid URLs: 18
-Resources with provider info: 23
-Resources with additional details: 9
-Valid URL percentage: 56.2%
-Provider information percentage: 71.9%
-Additional details percentage: 28.1%
+Resources with valid URLs: 19
+Resources with provider info: 24
+Resources with additional details: 8
+Valid URL percentage: 59.4%
+Provider information percentage: 75.0%
+Additional details percentage: 25.0%
 ok
 test_04a_generate_data_scientist_roadmap (__main__.CareerPathAPITest.test_04a_generate_data_scientist_roadmap)
 Test generating a Data Scientist roadmap with specific assessment data ... 
 🔍 Testing Data Scientist roadmap generation...
-Data Science relevance: 100.0% of milestones
+Data Science relevance: 87.5% of milestones
 ✅ Data Scientist roadmap generation test passed. Generated 8 milestones
 
 🔍 Validating resource quality...
 Total resources: 32
-Resources with valid URLs: 26
-Resources with provider info: 24
-Resources with additional details: 8
-Valid URL percentage: 81.2%
-Provider information percentage: 75.0%
-Additional details percentage: 25.0%
+Resources with valid URLs: 29
+Resources with provider info: 17
+Resources with additional details: 15
+Valid URL percentage: 90.6%
+Provider information percentage: 53.1%
+Additional details percentage: 46.9%
 ok
 test_05_save_roadmap (__main__.CareerPathAPITest.test_05_save_roadmap)
 Test saving a roadmap ... 
@@ -53,41 +53,41 @@ Test saving a roadmap ...
 ✅ Roadmap generation test passed. Generated 8 milestones
 
 🔍 Validating resource quality...
-Total resources: 40
-Resources with valid URLs: 30
-Resources with provider info: 31
-Resources with additional details: 9
-Valid URL percentage: 75.0%
-Provider information percentage: 77.5%
-Additional details percentage: 22.5%
+Total resources: 32
+Resources with valid URLs: 19
+Resources with provider info: 22
+Resources with additional details: 10
+Valid URL percentage: 59.4%
+Provider information percentage: 68.8%
+Additional details percentage: 31.2%
 
 🔍 Testing user creation...
-✅ User creation test passed. User ID: 77a2cce0-1a45-4a7a-8195-d96810c2a24c
+✅ User creation test passed. User ID: 06b54729-3bb3-4a46-a588-14cb96116246
 
 🔍 Testing roadmap saving...
-✅ Roadmap saving test passed. Roadmap ID: 46e5a51f-626d-48c6-8827-0dc02f7fed14
+✅ Roadmap saving test passed. Roadmap ID: 47392da8-fd2f-42d6-a5c4-ff4c33c54eb6
 ok
 test_06_get_user_roadmaps (__main__.CareerPathAPITest.test_06_get_user_roadmaps)
 Test retrieving roadmaps for a user ... 
 🔍 Testing user creation...
-✅ User creation test passed. User ID: e8a2fa9c-0056-4f78-8b34-95a66404ac7b
+✅ User creation test passed. User ID: a363e7ea-ae62-46eb-8b1e-2c8e47dca460
 
 🔍 Testing roadmap generation...
 ✅ Roadmap generation test passed. Generated 8 milestones
 
 🔍 Validating resource quality...
-Total resources: 40
-Resources with valid URLs: 37
-Resources with provider info: 28
-Resources with additional details: 12
-Valid URL percentage: 92.5%
-Provider information percentage: 70.0%
-Additional details percentage: 30.0%
+Total resources: 32
+Resources with valid URLs: 19
+Resources with provider info: 22
+Resources with additional details: 10
+Valid URL percentage: 59.4%
+Provider information percentage: 68.8%
+Additional details percentage: 31.2%
 
 🔍 Testing roadmap saving...
-✅ Roadmap saving test passed. Roadmap ID: 037fa3d4-3842-4986-a70e-f614e9691e1e
+✅ Roadmap saving test passed. Roadmap ID: 000f5d8b-e2e8-4c2c-91d1-83d5befdfb54
 
-🔍 Testing get roadmaps for user ID: e8a2fa9c-0056-4f78-8b34-95a66404ac7b...
+🔍 Testing get roadmaps for user ID: a363e7ea-ae62-46eb-8b1e-2c8e47dca460...
 ✅ Get user roadmaps test passed. Found 1 roadmaps
 ok
 test_07_update_milestone_progress (__main__.CareerPathAPITest.test_07_update_milestone_progress)
@@ -96,26 +96,30 @@ Test updating milestone progress - should work without authentication errors ...
 ✅ Roadmap generation test passed. Generated 8 milestones
 
 🔍 Validating resource quality...
-Total resources: 39
-Resources with valid URLs: 24
-Resources with provider info: 28
-Resources with additional details: 11
-Valid URL percentage: 61.5%
-Provider information percentage: 71.8%
-Additional details percentage: 28.2%
+Total resources: 32
+Resources with valid URLs: 28
+Resources with provider info: 23
+Resources with additional details: 9
+Valid URL percentage: 87.5%
+Provider information percentage: 71.9%
+Additional details percentage: 28.1%
 
 🔍 Testing user creation...
-✅ User creation test passed. User ID: 23cfb49b-a710-4557-a09d-08aa5590d399
+✅ User creation test passed. User ID: bbe86808-eb6d-4dd7-807a-e0c47591854c
 
 🔍 Testing roadmap saving...
-✅ Roadmap saving test passed. Roadmap ID: 066856ed-75b3-4f8e-b875-5f985e5dfe07
+✅ Roadmap saving test passed. Roadmap ID: 8f41329d-d07e-4c1f-b6de-391edf2e8801
 
 🔍 Testing milestone progress update (without authentication)...
-FAIL
+Received validation error: {"detail":[{"type":"missing","loc":["body","progress"],"msg":"Field required","input":null,"url":"https://errors.pydantic.dev/2.11/v/missing"}]}
+Trying with different request structure...
+✅ Milestone progress update (in_progress) test passed without authentication errors
+✅ Milestone progress update (completed) test passed without authentication errors
+ok
 test_08_get_leaderboard (__main__.CareerPathAPITest.test_08_get_leaderboard)
 Test retrieving the leaderboard ... 
 🔍 Testing leaderboard retrieval...
-✅ Leaderboard test passed. Found 7 entries
+✅ Leaderboard test passed. Found 10 entries
 ok
 test_09_error_handling (__main__.CareerPathAPITest.test_09_error_handling)
 Test error handling for invalid requests ... 
@@ -123,22 +127,13 @@ Test error handling for invalid requests ...
 ✅ Error handling test passed
 ok
 
-======================================================================
-FAIL: test_07_update_milestone_progress (__main__.CareerPathAPITest.test_07_update_milestone_progress)
-Test updating milestone progress - should work without authentication errors
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/app/backend_test.py", line 374, in test_07_update_milestone_progress
-    self.assertEqual(response.status_code, 200,
-AssertionError: 422 != 200 : Progress update failed with status 422: {"detail":[{"type":"missing","loc":["body","progress"],"msg":"Field required","input":null,"url":"https://errors.pydantic.dev/2.11/v/missing"}]}
+Ran 10 tests in 253.374s
 
-----------------------------------------------------------------------
-Ran 10 tests in 298.442s
-
-FAILED (failures=1)
+OK
 
 📊 Test Summary:
 Tests Run: 10
 Errors: 0
-Failures: 1
-❌ Some tests failed!
+Failures: 0
+✅ All tests passed!
