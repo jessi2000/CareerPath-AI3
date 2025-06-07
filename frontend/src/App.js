@@ -36,9 +36,40 @@ function App() {
     }
   };
 
+  const simulateLoadingStages = () => {
+    const stages = [
+      { message: "Analyzing your career profile...", duration: 1500 },
+      { message: "Checking current market trends...", duration: 2000 },
+      { message: "Consulting industry experts...", duration: 1800 },
+      { message: "Researching skill requirements...", duration: 1700 },
+      { message: "Generating personalized roadmap...", duration: 2500 },
+      { message: "Finalizing recommendations...", duration: 1000 }
+    ];
+    
+    let currentProgress = 0;
+    let stageIndex = 0;
+    
+    const progressInterval = setInterval(() => {
+      if (stageIndex < stages.length) {
+        setLoadingStage(stages[stageIndex].message);
+        setLoadingProgress(((stageIndex + 1) / stages.length) * 100);
+        stageIndex++;
+      } else {
+        clearInterval(progressInterval);
+      }
+    }, 1500);
+    
+    return () => clearInterval(progressInterval);
+  };
+
   const handleAssessmentSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setLoadingProgress(0);
+    setLoadingStage("Initializing your career assessment...");
+    
+    // Start loading animation
+    const clearLoadingInterval = simulateLoadingStages();
     
     try {
       // First create a user profile
@@ -98,16 +129,30 @@ function App() {
       
       const savedRoadmap = await saveResponse.json();
       setRoadmap(savedRoadmap);
-      setCurrentStep('roadmap');
+      
+      // Final loading stage
+      setLoadingStage("🎉 Your personalized roadmap is ready!");
+      setLoadingProgress(100);
+      
+      // Brief pause before transitioning
+      setTimeout(() => {
+        setCurrentStep('roadmap');
+        clearLoadingInterval();
+        setLoading(false);
+        setLoadingStage('');
+        setLoadingProgress(0);
+      }, 1500);
       
       // Refresh leaderboard to include new user
       fetchLeaderboard();
       
     } catch (error) {
       console.error('Error generating roadmap:', error);
-      alert('Failed to generate roadmap. Please try again.');
-    } finally {
+      clearLoadingInterval();
       setLoading(false);
+      setLoadingStage('');
+      setLoadingProgress(0);
+      alert('Failed to generate roadmap. Please try again.');
     }
   };
 
