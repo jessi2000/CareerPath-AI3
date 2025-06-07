@@ -105,6 +105,10 @@ class AIRoadmapService:
             logging.warning("Using fallback roadmap generation - Claude API key not valid")
     
     async def generate_roadmap(self, assessment: AssessmentData, user_name: str) -> CareerRoadmap:
+        # Use fallback if Claude API is not available
+        if self.use_fallback:
+            return self._generate_fallback_roadmap(assessment, user_name)
+        
         try:
             # Create chat instance with latest Claude model
             chat = LlmChat(
