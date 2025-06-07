@@ -604,8 +604,15 @@ function App() {
                       <p className="text-indigo-200 text-sm">{milestone.market_relevance}</p>
                     </div>
                   )}
-                  <div className="text-sm text-gray-400">
-                    Estimated time: {milestone.estimated_hours} hours
+                  <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-cyan-400">⏱️</span>
+                      <span>Est. Time: <strong className="text-white">{milestone.estimated_hours}</strong> hours</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-blue-400">📅</span>
+                      <span>~{Math.ceil(milestone.estimated_hours / (assessmentData.availability_hours_per_week || 10))} weeks</span>
+                    </div>
                   </div>
                 </div>
                 
