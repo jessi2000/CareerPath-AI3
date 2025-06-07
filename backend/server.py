@@ -392,7 +392,7 @@ async def get_leaderboard():
                 completed_milestones += sum(1 for m in roadmap["milestones"] if m["status"] == "completed")
             
             entry = LeaderboardEntry(
-                user_name=user["full_name"],
+                user_name=user.get("full_name", "Unknown User"),
                 total_points=user.get("total_points", 0),
                 milestones_completed=completed_milestones,
                 level=user.get("level", 1),
