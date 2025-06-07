@@ -182,11 +182,11 @@ backend:
 
   - task: "Leaderboard Functionality"
     implemented: true
-    working: false
+    working: true
     file: "/app/backend/server.py"
-    stuck_count: 1
+    stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
@@ -194,6 +194,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "Leaderboard test failed with status code 500. Error: {'detail': \"'full_name'\"} - This suggests there's an issue with accessing the 'full_name' field in the leaderboard entry."
+      - working: true
+        agent: "testing"
+        comment: "Fixed the leaderboard endpoint by adding a fallback value for the 'full_name' field. The endpoint now returns a list of leaderboard entries with default values for users without a full name."
 
   - task: "Authentication System"
     implemented: true
