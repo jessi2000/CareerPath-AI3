@@ -436,6 +436,7 @@ def run_tests():
     test_suite.addTest(CareerPathAPITest('test_02_create_user'))
     test_suite.addTest(CareerPathAPITest('test_03_get_user'))
     test_suite.addTest(CareerPathAPITest('test_04_generate_roadmap'))
+    test_suite.addTest(CareerPathAPITest('test_04a_generate_data_scientist_roadmap'))
     test_suite.addTest(CareerPathAPITest('test_05_save_roadmap'))
     test_suite.addTest(CareerPathAPITest('test_06_get_user_roadmaps'))
     test_suite.addTest(CareerPathAPITest('test_07_update_milestone_progress'))
@@ -447,6 +448,7 @@ def run_tests():
 
 if __name__ == "__main__":
     print("🚀 Starting CareerPath AI API Tests")
+    print("🔍 Focus: Milestone Progress Update Fix and AI Roadmap Generation")
     result = run_tests()
     
     print("\n📊 Test Summary:")
